@@ -3,12 +3,42 @@
 #### Student number: G00274374
 A Python script that solves the Countdown letters game, and a readme explaining how the solver works.
 
+## Introduction
+Insert introduction here.  
+[Project Brief](https://gist.github.com/ianmcloughlin/cc5340ee080bd135919a)
 
-Insert introduction here.
 
 ## Background
-The first task I completed as part of this project was to Google "countdown letters game solver".
-Google gave me two relevant results on the first page, these are [Cool Project name][2] and [Cool Solver][3].
+First I set up an issue tracker for my "General Python Research".
+Before I even began this project I spent quite some time studying python.  
+I completed (Code Schools)[1] "Try Python" and "Flying Through Python" courses.  
+Listened to some python podcasts[2], and read a few chapters from Miguels book on Flask[3].  
+Once all of this research was done, I went back through all the excercises done in class and modified them (they are located on this repo: ####).  
+To finalise my research I completed the Gambit Problem Sheet in Python, located here: ####.  
+
+Now that the intense research is complete I went onto setup a list of project tasks to be completed in the github issue tracker.
+
+The first task on the list was to Google "countdown letters game solver" and "python word permutations" .
+I found these relevant results: [Cool Project name][2] and [Cool Solver][3].
+
+The second task was to read heaps paper on permutations and try to implement it in python.
+This helped me in understanding word permutations at a deeper level in Python.
+
+My third task was to get the wordlist, I decided to create a webscraper to do this for me.
+I used the ### package in order to do this.
+I found these links very useful:
+
+The next task was to focus primarily on trying various techniques in order to find all of the words from the nine letters given.
+
+Next I created a function to randomely select 9 letters (with at least 3 vowels and 4 consonants).
+
+I then created a program that could load in my various different countdown solver packages, call them with the 9 letter module, and time them all automatically.
+
+The cherry on top was to implement my packages into a flask application and host it on heroku.  
+
+I updated this document constantly during my journey through this project.    
+I added anything of interest or that stood out, be it big efficiency spikes or drawbacks that I came accross.  
+
 
 ## Words list
 My words list is in the file [wordslist.txt](wordslist.txt) in this repoistory/gist.
@@ -43,6 +73,6 @@ My script runs very quickly, and certainly within the 30 seconds allowed in the 
 
 
 ## References
-[1]: http://www.oxfordlearnersdictionaries.com/wordlist/english/oxford3000/
-[2]: http://www.oxfordlearnersdictionaries.com/wordlist/english/oxford3000/
-[3]: http://www.oxfordlearnersdictionaries.com/wordlist/english/oxford3000/
+[1]: https://www.codeschool.com/learn/python
+[2]: https://talkpython.fm/
+[3]: http://shop.oreilly.com/product/0636920031116.do
