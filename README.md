@@ -40,18 +40,17 @@ Python algorithms already out there:
 - [gossamer](http://www.gossamer-threads.com/lists/python/python/616211)
 - [gossamer 2](http://www.gossamer-threads.com/lists/python/python/618568)
 - [Stack Overflow](http://stackoverflow.com/questions/35640414/countdown-letters-solver-recursive-python)
-- 
 
-I found this great paper on the countdown problem: [The countdown problem][http://www.cs.nott.ac.uk/~pszgmh/countdown.pdf].
+I found this great paper on the countdown problem: [The countdown problem][8].
 
-The second task was to read [heaps paper][8] on permutations and try to implement it in python.  
+The second task was to read [heaps paper][9] on permutations and try to implement it in python.  
 This helped me in understanding word permutations at a deeper level in Python.
 
 ### Coding it up
 
 My third task was to get the wordlist, I decided to create a webscraper to do this for me.  
-I used the [BeautifulSoup][9] package in order to do this.  
-I also considered using the HTTP [Requests library][10] in order to download a wordlist file from a webpage via a HTTP Get request.
+I used the [BeautifulSoup][10] package in order to do this.  
+I also considered using the HTTP [Requests library][11] in order to download a wordlist file from a webpage via a HTTP Get request.
 
 The next task was to focus primarily on trying various techniques in order to find all of the words from the nine letters given.
 
@@ -66,13 +65,13 @@ I added anything of interest or that stood out, be it big efficiency spikes or d
 
 
 ## Words list
-My words list is in the file [wordslist.txt][11] in this repoistory/gist.  
-I got my words list from the [Oxford Learner's Dictionaries][12] website.  
+My words list is in the file [wordslist.txt][12] in this repoistory/gist.  
+I got my words list from the [Oxford Learner's Dictionaries][13] website.  
 In order to efficiently retrieve all the words from all the word lists on the website I create a web scraper which you can run from the menu in the main program.  
 I also considered creating an algorithm that parses all the words in a book and using that as a word list. I think Leo Tolstoy's *War and Peace* would suffice.
 
 ## Python script
-My script is in the files [solver.py][13] in this repository and it works as follows.  
+My script is in the files [solver.py][14] in this repository and it works as follows.  
 The most important section is:
 
 ```python
@@ -129,20 +128,23 @@ My script runs very quickly, and certainly within the 30 seconds allowed in the 
 [7]: http://www.crummy.com/software/BeautifulSoup/
 [[7]]: Gambit Problem Sheet
 
-[8]: http://comjnl.oxfordjournals.org/content/6/3/293.full.pdf
-[[8]]: Permutations by interchanges - B. R. Heap
+[8]: http://www.cs.nott.ac.uk/~pszgmh/countdown.pdf
+[[8]]: The Countdown Problem - Graham Hutton
 
-[9]: http://www.crummy.com/software/BeautifulSoup/
-[[9]]: Beautiful Soup
+[9]: http://comjnl.oxfordjournals.org/content/6/3/293.full.pdf
+[[9]]: Permutations by interchanges - B. R. Heap
 
-[10]: http://requests.readthedocs.org/en/master/
-[[10]]: Requests - The only Non-GMO HTTP library for Python
+[10]: http://www.crummy.com/software/BeautifulSoup/
+[[10]]: Beautiful Soup
 
-[11]: wordlist.txt
-[[11]]: wordlist.txt file
+[11]: http://requests.readthedocs.org/en/master/
+[[11]]: Requests - The only Non-GMO HTTP library for Python
 
-[12]: http://www.oxfordlearnersdictionaries.com/wordlist/
-[[12]]: Wordlists in Oxford Learner's Dictionaries
+[12]: wordlist.txt
+[[12]]: wordlist.txt file
 
-[13]: solver.py
-[[13]]: solver.py file
+[13]: http://www.oxfordlearnersdictionaries.com/wordlist/
+[[13]]: Wordlists in Oxford Learner's Dictionaries
+
+[14]: solver.py
+[[14]]: solver.py file
