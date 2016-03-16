@@ -29,17 +29,18 @@ To finalise my research I completed the Gambit Problem Sheet in Python, located 
 Now that the intense research is complete I went onto setup a list of project tasks to be completed in the github issue tracker.
 
 The first task on the list was to Google "countdown letters game solver" and "python word permutations" .  
-I found these relevant results:
-- [Ben Mason][http://benmason.net/countdown.qsp] 
-- [Incoherency][http://incoherency.co.uk/countdown/]
-- [Data Genetics][http://www.datagenetics.com/blog/august52014/index.html]
+I found these relevant results:  
+- [Ben Mason](http://benmason.net/countdown.qsp])
+- [Incoherency](http://incoherency.co.uk/countdown/)
+- [Data Genetics](http://www.datagenetics.com/blog/august52014/index.html)
 
 Python algorithms already out there:
-- [thesamovar algorithm][http://thesamovar.net/countdownnumbers]
-- [thesamovar blog post][https://thesamovar.wordpress.com/2008/01/02/countdown-numbers-game-in-python/]
-- [gossamer][http://www.gossamer-threads.com/lists/python/python/616211]
-- [gossamer 2][http://www.gossamer-threads.com/lists/python/python/618568]
-- [Stack Overflow][http://stackoverflow.com/questions/35640414/countdown-letters-solver-recursive-python]
+- [thesamovar algorithm](http://thesamovar.net/countdownnumbers)
+- [thesamovar blog post](https://thesamovar.wordpress.com/2008/01/02/countdown-numbers-game-in-python/)
+- [gossamer](http://www.gossamer-threads.com/lists/python/python/616211)
+- [gossamer 2](http://www.gossamer-threads.com/lists/python/python/618568)
+- [Stack Overflow](http://stackoverflow.com/questions/35640414/countdown-letters-solver-recursive-python)
+- 
 
 I found this great paper on the countdown problem: [The countdown problem][http://www.cs.nott.ac.uk/~pszgmh/countdown.pdf].
 
