@@ -1,13 +1,10 @@
 # Countdown-Letters-Game-Solver
-A Python script that solves the Countdown letters game, and a readme explaining how the solver works.
-
 ### Student name: Ronan Connolly
 #### Student number: G00274374
+A Python script that solves the Countdown letters game, and a readme explaining how the solver works.
 
-# Countdown Letters Game Solver
+
 Insert introduction here.
-This gist is just an example of how you might layout your submission.
-Please change it to suit your needs.
 
 ## Background
 The first task I completed as part of this project was to Google "countdown letters game solver".
