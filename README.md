@@ -120,8 +120,56 @@ If I used a list and tweaked this algorithm it would be more efficient.
 After much time I could not figure it out.
 
 ## Python script
-My script is in the files [solver.py][14] in this repository and it works as follows.  
-The most important section is:
+### Main module (countdown.py)
+My script is in the files [countdown.py][14] in this repository and it works as follows.  
+It is the main entry point for the program, although you can run each module independently thanks to the structuring.  
+
+When you run this module you will be presented with a menu:  
+```sh
+~~~~~Countdown~~~~~
+~~~~~~~~~~~~~~~~~~~
+1:  Create Dictionary
+2:  Create Random Letters
+3:  Run Solvers
+0:  Quit
+```
+This lets you:
+- create a dictionary which runs the web scraper.
+- test the random letters generator (which the run solvers option uses).
+- run the solver (main algorithm) which will generate random letters and find the best match.
+
+The solver function stops once it finds the best match, but it can keep going if we want, we just need to remove the break statement and append each results to a list.  
+
+I decided that this was not necessary.
+
+### Solver.py
+This is where the action happens
+
+First we get all the permutations as described above:
+```py
+def find_anag(word_dict, letters):
+    word_permu = permut(letters)
+    # print(word_permu)
+
+    count = -1
+    anagrams = 'empty'
+    for word in word_permu:
+        count += 1
+        anagrams = word_dict.get(word, 'empty')
+        if anagrams != 'empty':
+            break
+
+    print('Anagrams:\t%s' % anagrams)
+    print('Attempts:\t%s\n' % count)
+```
+We can view the permutations by uncommenting the commented line.
+Here we are keeping track of how many attempts it took before we found our word.
+
+After running it many times I found it usually take 20 attempts but outliers of 3 and 34 attempts do pop up often. 
+
+Since we are using the Oxford word lists, we only have approxiately 10'000 words so there are time we cannot find an anagram.  Altough this is rare as we are allowing the letters 'I' and 'a' as words.
+
+If there are no anagrams then there will be 43 attempts.
 
 ```py
 import random
@@ -137,7 +185,8 @@ import nothing
 That didn't work too well, so I changed it.
 
 ## Step Through
-*Step by step what the main module does*
+*Step by step the logic of the solver*
+*Keep it succinct*
 
 ## Preprocessing
 My program does a lot of preprocessing.  
@@ -149,8 +198,13 @@ The word list used by the dictionary generator is also saved via pickle which ma
 
 For more information on the word list check out the `Words list` heading above.
 
-### 1: sorting with a dictionary
-This version of the solver took the biggest preprocessing time.  
+## Solver Algorithms (versions)
+I decided to set my self the task of creating three different solver algorithms.  Since this project is all about the theory of algorithms I thought it would be worth while to cover not just the depth of algorithms but breadth as well. I feel like this is advantageous due to the fact that when you are faced with the same algorithm for days on end you can develop tunnel vision. By switching to another style of algorithm and coming up with new insights, by the time I finish up and revisit the previous algorithm there will more then likely be a Eureka moment.
+
+### Sorted words in dictionary
+This version of the solver took the biggest preprocessing time, as the whole words list needed be sorted, turned into a dictionary and pickled.
+Once complete we can reap the rewards of a much lower permutation check on any given word.
+
 I like how simple and elegant this solution is.  
 In order to have a list as the value of the dictionary I used the Python Collections - Default Dictionary. I found this great [Stack Overflow answer](http://stackoverflow.com/a/26367880/2052295).  
 In added a list as the value type very simply:  
@@ -162,6 +216,27 @@ One of the great things about this dictionary is that when you append the first 
 ```py
 word_dict[srt_word].append(word)
 ```
+
+As stated previously there are a few duplicates created with the `permut.py` function, this is why I used a set. 
+
+I counted the number of permutations against the number of permutations generated.
+For a nine letter word I am generating 511 permutations, so there are duplicates. Only approximately 44 of these are used (including one character words). If a letter is duplicated then it affects the outcome of useful permutations.
+
+511 permutations is not a lot due to the fact that my word is sorted, still I feel like there is a better solution then 511 attempts, also this does not scale into other (non sorted) algorithms.
+
+**Maximum**
+If all the letters are different then we are left with a maximum of 44 permutations.
+
+**Minimum:**
+If all the vowels are the same and the consonants also the same then we have:
+27 permutations if 3 vowels and 6 consonants.
+29 permutations if 4 consonants 5 vowels.
+
+### Custom hashing
+*TODO*
+
+### Heaps algorithm (customized)
+*TODO*
 
 ## Efficiency
 Here's some stuff about how efficient my code is, including an analysis of how many calculations my algorithm requires.
@@ -215,7 +290,7 @@ My script runs very quickly, and certainly within the 30 seconds allowed in the 
 [13]: http://www.oxfordlearnersdictionaries.com/wordlist/
 [[13]]: Wordlists in Oxford Learner's Dictionaries
 
-[14]: solver.py
+[14]: https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/countdown.py
 [[14]]: solver.py file
 
 [15]: http://docs.python-guide.org/en/latest/scenarios/scrape/

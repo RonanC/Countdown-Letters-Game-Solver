@@ -10,9 +10,12 @@ It expects a list of letters.
 """
 
 words = set()
+# count = []
+
 
 def permuter(letters):
     words.add(letters)
+    # count.append(letters)
     if len(letters) > 1:
         permuter(letters[:-1])
         permuter(letters[1:])
@@ -38,8 +41,11 @@ def permut(letters):
 
 
 def main():
-    letters = 'hello'
-    print(permut(letters))
+    letters = 'eeeffffee'
+    permuts = permut(letters)
+    print(len(permuts))
+    print(permuts)
+    # print(len(count))
 
 
 if __name__ == '__main__':

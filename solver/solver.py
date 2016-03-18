@@ -93,7 +93,7 @@ def find_anag(word_dict, letters):
     word_permu = permut(letters)
     # print(word_permu)
 
-    count = -1
+    count = 0
     anagrams = 'empty'
     for word in word_permu:
         count += 1

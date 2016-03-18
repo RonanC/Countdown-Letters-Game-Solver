@@ -32,7 +32,7 @@ def main_menu():
         print('~~~~~~~~~~~~~~~~~~~')
         print('1:\tCreate Dictionary')
         print('2:\tCreate Random Letters')
-        print('3:\tRun Solvers')
+        print('3/ent:\tRun Solvers')
         print('0:\tQuit\n')
 
         str_choice = input(prompt)
@@ -42,8 +42,11 @@ def main_menu():
                 options[int(choice)]()
             else:
                 print('Choices between 0 and %s.' % (len(options) - 1))
+        elif str_choice == '':
+            # enter key was pressed
+            options[3]()
         else:
-            print('Integers only.')
+            print('Integers (or enter key) only.')
 
 
 def run_solvers():
