@@ -2,7 +2,7 @@
 countdown
 ~~~~~~~~~~~~
 
-Countdown is the main module of this project.
+This is the main module.
 It implements all other modules in this project.
 
 This project:
@@ -15,6 +15,11 @@ This project:
 See other module headers for more information.
 """
 
+from web_scraper import web_scraper
 
-def countdown():
-    print("countdown")
+
+def main():
+    web_scraper.run()
+
+if __name__ == '__main__':
+    main()

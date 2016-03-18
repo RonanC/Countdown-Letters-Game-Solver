@@ -15,7 +15,11 @@ it saved to a pickle and a text file.
 
 import requests
 from bs4 import BeautifulSoup
-import pickle
+
+if __name__ == "__main__":
+    from save_words import save_words
+else:
+    from web_scraper.save_words import save_words
 
 
 def get_word_list(url):
@@ -87,39 +91,10 @@ def get_new_words(base_url):
     return words
 
 
-def save_words(words, filename, serialize=2):
-    def pkl_words():
-        pkl_filename = filename + '.pkl'
-        output = open(pkl_filename, 'wb')
-        pickle.dump(words, output)
-        output.close()
-        print("serialized words to ", pkl_filename)
-
-    def txt_words():
-        txt_filename = filename + '.txt'
-        file = open(txt_filename, 'w')
-        for word in words:
-            file.write('%s\n' % word)
-        file.close()
-        print("saved words to ", txt_filename)
-
-    if serialize == 0:
-        pkl_words()
-    elif serialize == 1:
-        txt_words()
-    else:
-        pkl_words()
-        txt_words()
-
-
-def web_scraper():
+def get_url_list(base_url, url_file):
     url_list = []
-    word_set = set()
-    base_url = 'http://www.oxfordlearnersdictionaries.com'
-    base_url += '/wordlist'
+    file = open(url_file, 'r')
 
-    # url list
-    file = open('url_list.txt', 'r')
     url_items = []
     for line in file:
         exts = [x.strip() for x in line.split(',')]
@@ -131,8 +106,14 @@ def web_scraper():
             new_url = base_url + item[0] + categ
             url_list.append(new_url)
 
-    for url in url_list:
-        word_set = set(list(word_set) + list(get_word_list(url)))
+    return url_list
+
+
+def get_words(base_url, url_list):
+    word_set = set()
+
+    # for url in url_list:
+        # word_set = set(list(word_set) + list(get_word_list(url)))
 
     # the new words page has a different structure
     word_set = set(list(word_set) + list(get_new_words(base_url)))
@@ -143,7 +124,28 @@ def web_scraper():
     print(words_sorted, '\n')
     print('Total Words Found: ', len(words_sorted), '\n')
 
-    save_words(words_sorted, 'word_list')
+    return words_sorted
 
 
-web_scraper()
+def web_scraper():
+    base_url = 'http://www.oxfordlearnersdictionaries.com'
+    base_url += '/wordlist'
+
+    # url list
+    if __name__ == "__main__":
+        url_file = 'url_list.txt'
+        filename = 'word_list'
+    else:
+        url_file = 'web_scraper/url_list.txt'
+        filename = 'web_scraper/word_list'
+
+    url_list = get_url_list(base_url, url_file)
+    words_sorted = get_words(base_url, url_list)
+    save_words(words_sorted, filename)
+
+
+def run():
+    web_scraper()
+
+if __name__ == "__main__":
+    run()
