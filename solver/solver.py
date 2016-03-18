@@ -30,8 +30,10 @@ import pickle
 from collections import defaultdict
 if __name__ == '__main__':
     from letter_gen import letter_gen
+    from permut import permut
 else:
     from solver.letter_gen import letter_gen
+    from solver.permut import permut
 
 
 def load_word_list(filename):
@@ -77,7 +79,7 @@ def add_dict_words(word_list):
     return word_dict
 
 
-def solver_dict(word_list):
+def solver_dict(word_list, letters):
     if __name__ == "__main__":
         word_dict_file = 'word_dict'
     else:
@@ -90,25 +92,73 @@ def solver_dict(word_list):
     save_word_dict(word_dict_file, word_dict)
     print("%s keys in the word dict.\n" % (len(word_dict)))
 
-    found = 0
-    attempt = 0
-    while not found:
-        attempt += 1
-        print('Attempt:\t%s' % (attempt))
+    # letters
+    # srt_letters = sorted(letters)
+    # str_letters = ''.join(srt_letters)
 
-        # get random 9 letters
-        letters = letter_gen()
-        print('Letters:\t%s' % letters)
-        srt_letters = sorted(letters)
-        str_letters = ''.join(srt_letters)
+    # get all permutations of word
+    # print(letters)
+    word_permu = permut(letters)
+    # print(word_permu)
 
-        found = 0
-        anagrams = word_dict.get(str_letters, 'empty')
-        print('Anagrams:\t%s\n' % anagrams)
-
+    count = -1
+    for word in word_permu:
+        count += 1
+        anagrams = word_dict.get(word, 'empty')
         if anagrams != 'empty':
-            print('Found one!')
-            found = 1
+            break
+
+    print('Anagrams:\t%s' % anagrams)
+    print('Count:\t\t%s\n' % count)
+    
+
+    # anagrams = word_dict.get(word, 'empty')
+
+    # if anagrams != 'empty':
+    #     print('Letters: %s' % str_letters)
+    #     print('Anagrams:\t%s\n' % anagrams)
+    # else:
+    #     print("No anagrams found.\n")
+
+    # find anagram
+    # found = 0
+    # attempt = 0
+    # while not found:
+    #     attempt += 1
+    #     print('\nAttempt:\t%s' % (attempt))
+
+    #     # check full 9 letters
+    #     anagrams = word_dict.get(str_letters, 'empty')
+
+        # check every possible permutation
+        # starting at 9 and going down
+        # we know the dictionary is sorted 
+        # so we need to take off the front and end
+        # example: from
+        # sfrom: sfro, from
+        #   from: fro, rom
+        #       fro: fr, ro
+        #           fr: f, r 
+        #           ro: o, m
+        #       rom: !ro, om
+        #   sfro: sfr, !fro
+        #       sfr: sf, !fr
+        #           sf: s !f
+        # 
+        # conclusion, there are always two splits, the second split only ever keeps one variation
+        # one unique and one shared
+        
+        # print('str_letters: %s' % str_letters)
+        # if anagrams != 'empty':
+        #     # print('Found one on attempt %s' % attempt)
+        #     # print('Letters: %s' % str_letters)
+        #     print('Anagrams:\t%s\n' % anagrams)
+        #     found = 1
+        # elif len(str_letters) == 0:
+        #     found = 1
+        #     print("No anagrams found.\n")
+        # else:
+        #     str_letters = str_letters[:-1]
 
 
 def solver():
@@ -124,10 +174,11 @@ def solver():
     word_list = load_word_list(word_list_file)
 
     # get random 9 letters
-    # letters = letter_gen()
+    letters = letter_gen()
+    print('Letters:\t%s' % letters)
 
     # solver via dictionary and sorting
-    solver_dict(word_list)
+    solver_dict(word_list, letters)
 
 
 def run():
