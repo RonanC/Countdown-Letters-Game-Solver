@@ -16,7 +16,7 @@ See other module headers for more information.
 """
 
 from web_scraper import web_scraper
-from anagram_solver import letter_gen
+from solver import letter_gen, solver
 import sys
 
 
@@ -47,6 +47,7 @@ def main_menu():
 
 def run_solvers():
     print('Running solvers....')
+    solver.run()
 
 
 def create_letters():
@@ -55,8 +56,20 @@ def create_letters():
 
 
 def create_dict():
-    print('Creating dictionary...')
-    web_scraper.run()
+    print('\nThis may take up to 2/3 mins to complete.')
+    print('1:\tContinue')
+    print('0:\tCancel')
+
+    str_choice = input('> ')
+    if str_choice.isdigit():
+        choice = int(str_choice)
+        if choice == 1:
+            print('Creating dictionary...')
+            web_scraper.run()
+        else:
+            print('Cancelled')
+    else:
+        print('Cancelled')
 
 
 def quit():

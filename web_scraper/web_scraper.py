@@ -93,8 +93,8 @@ def get_new_words(base_url):
 
 def get_url_list(base_url, url_file):
     url_list = []
-    file = open(url_file, 'r')
 
+    file = open(url_file, 'r')
     url_items = []
     for line in file:
         exts = [x.strip() for x in line.split(',')]
@@ -113,8 +113,8 @@ def get_words(base_url, url_list):
     word_set = set()
 
     # all word lists except new_words
-    # for url in url_list:
-        # word_set = set(list(word_set) + list(get_word_list(url)))
+    for url in url_list:
+        word_set = set(list(word_set) + list(get_word_list(url)))
 
     # the new words page has a different structure
     word_set = set(list(word_set) + list(get_new_words(base_url)))

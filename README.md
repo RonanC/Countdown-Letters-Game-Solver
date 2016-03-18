@@ -83,17 +83,23 @@ This file accesses the scripts in sub-directories, this keeps things modular and
 I added the `__init__.py` files to all sub-directories in order to let Python know these subdirectories are actually packages (I tested this and it is necessary).  
 I used `if __name__ == '__main__` in order to allow the use of the sub-packages by themselves. This is needed when dealing with loading and saving files as the program will be checking only the main modules current directory.
 
+## Letter Generator
+The `letter_gen.py` module create a random nine letter list with at least three vowels and four consonants. I saved the string.ascii_lowercase to a list, I created a vowels list, I then used list comprehensions to add all items from the full letters list excluding the vowels:  
+```py
+consons = [x for x in letters if x not in vowels]
+```
+
 ## Python script
 My script is in the files [solver.py][14] in this repository and it works as follows.  
 The most important section is:
 
-```python
+```py
 import random
 print(random.shuffle("My code is cool."))
 ```
 
 Previously it looked like this:
-```python
+```py
 # Note that the following snippet of code was adapted from
 # the Stack Overflow post available here: http://www.so.com/post/123
 import nothing
@@ -106,6 +112,20 @@ That didn't work too well, so I changed it.
 ## Preprocessing
 My script does a lot of preprocessing, which only needs to be run once.  
 Once the preprocessing is done we can run the game solver again and again without that overhead.
+
+### 1: sorting with a dictionary
+This version of the solver took the biggest preprocessing time.  
+I like how simple and elegant this solution is.  
+In order to have a list as the value of the dictionary I used the Python Collections - Default Dictionary. I found this great [Stack Overflow answer](http://stackoverflow.com/a/26367880/2052295).  
+In added a list as the value type very simply:  
+```py
+word_dict = defaultdict(list)
+```
+
+One of the great things about this dictionary is that when you append the first word onto the list it automatically calls the `default_factory` which returns an empty list:  
+```py
+word_dict[srt_word].append(word)
+```
 
 ## Efficiency
 Here's some stuff about how efficient my code is, including an analysis of how many calculations my algorithm requires.
