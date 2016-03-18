@@ -112,6 +112,7 @@ def get_url_list(base_url, url_file):
 def get_words(base_url, url_list):
     word_set = set()
 
+    # all word lists except new_words
     # for url in url_list:
         # word_set = set(list(word_set) + list(get_word_list(url)))
 

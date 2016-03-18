@@ -67,8 +67,21 @@ I added anything of interest or that stood out, be it big efficiency spikes or d
 ## Words list
 My words list is in the file [wordslist.txt][12] in this repoistory/gist.  
 I got my words list from the [Oxford Learner's Dictionaries][13] website.  
-In order to efficiently retrieve all the words from all the word lists on the website I create a web scraper which you can run from the menu in the main program.  
+In order to efficiently retrieve all the words from all the word lists on the website I create a web scraper which you can run from the menu in the main program.
+
 I also considered creating an algorithm that parses all the words in a book and using that as a word list. I think Leo Tolstoy's *War and Peace* would suffice.
+
+My web_scraper module loads in a list of base_urls and extensions. Next it creates all the full urls. Then each page of each url is checked, all words are made lower case and saved to a set (providing uniqueness). All the words per page are saved to the url words list. Once a url is fully checked that word list is merged into the main word list. 
+
+My program downloads the Oxford3000, Academic, Pictures, Usage Notes, and New Words lists in both English and American English.
+
+The words are then saved to a text and a pickle file, to be later utilized by the main program.
+
+## Architecture/Structure
+The main point of access for my program is `countdown.py` which is in the main folder.  
+This file accesses the scripts in sub-directories, this keeps things modular and more pythonic.  
+I added the `__init__.py` files to all sub-directories in order to let Python know these subdirectories are actually packages (I tested this and it is necessary).  
+I used `if __name__ == '__main__` in order to allow the use of the sub-packages by themselves. This is needed when dealing with loading and saving files as the program will be checking only the main modules current directory.
 
 ## Python script
 My script is in the files [solver.py][14] in this repository and it works as follows.  
