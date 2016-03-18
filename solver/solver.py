@@ -28,6 +28,10 @@ A dictionary and a list of letters are given as arguments to the main module.
 # init
 import pickle
 from collections import defaultdict
+if __name__ == '__main__':
+    from letter_gen import letter_gen
+else:
+    from solver.letter_gen import letter_gen
 
 
 def load_word_list(filename):
@@ -73,26 +77,58 @@ def add_dict_words(word_list):
     return word_dict
 
 
-def solver():
+def solver_dict(word_list):
     if __name__ == "__main__":
         word_dict_file = 'word_dict'
-        word_list_file = "../web_scraper/word_list"
     else:
         word_dict_file = 'solver/word_dict'
+
+    # go through each word
+    word_dict = add_dict_words(word_list)
+
+    # save dictionary
+    save_word_dict(word_dict_file, word_dict)
+    print("%s keys in the word dict.\n" % (len(word_dict)))
+
+    found = 0
+    attempt = 0
+    while not found:
+        attempt += 1
+        print('Attempt:\t%s' % (attempt))
+
+        # get random 9 letters
+        letters = letter_gen()
+        print('Letters:\t%s' % letters)
+        srt_letters = sorted(letters)
+        str_letters = ''.join(srt_letters)
+
+        found = 0
+        anagrams = word_dict.get(str_letters, 'empty')
+        print('Anagrams:\t%s\n' % anagrams)
+
+        if anagrams != 'empty':
+            print('Found one!')
+            found = 1
+
+
+def solver():
+    # this solver function calls all the other solvers
+    # It also times them all
+
+    if __name__ == "__main__":
+        word_list_file = "../web_scraper/word_list"
+    else:
         word_list_file = "web_scraper/word_list"
 
     # load word list
     word_list = load_word_list(word_list_file)
 
-    # go through each word
-    word_dict = add_dict_words(word_list)
+    # get random 9 letters
+    # letters = letter_gen()
 
-    # print(word_dict, '\n')
+    # solver via dictionary and sorting
+    solver_dict(word_list)
 
-    # save dictionary
-    save_word_dict(word_dict_file, word_dict)
-
-    print("%s keys in the word dict.\n" % (len(word_dict)))
 
 def run():
     solver()

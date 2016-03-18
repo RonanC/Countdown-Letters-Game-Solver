@@ -36,14 +36,10 @@ def letter_gen():
         my_letters.append(letter)
 
     shuffle(my_letters)
-    print('My Letters: ', my_letters, '\n')
+    # print('My Letters: ', my_letters, '\n')
 
     return my_letters
 
 
-def run():
-    letter_gen()
-
-
 if __name__ == '__main__':
-    run()
+    letter_gen()
