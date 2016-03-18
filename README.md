@@ -124,16 +124,17 @@ After much time I could not figure it out.
 My script is in the files [countdown.py][14] in this repository and it works as follows.  
 It is the main entry point for the program, although you can run each module independently thanks to the structuring.  
 
-When you run this module you will be presented with a menu:  
-```sh
-~~~~~Countdown~~~~~
-~~~~~~~~~~~~~~~~~~~
+When you run this module you will be presented with a menu (~'s through the MD off so I took them out'):  
+```
+------Countdown-----
+--------------------
 1:  Create Dictionary
 2:  Create Random Letters
 3:  Run Solvers
 0:  Quit
 ```
-This lets you:
+
+This lets you:  
 - create a dictionary which runs the web scraper.
 - test the random letters generator (which the run solvers option uses).
 - run the solver (main algorithm) which will generate random letters and find the best match.
@@ -146,6 +147,7 @@ I decided that this was not necessary.
 This is where the action happens
 
 First we get all the permutations as described above:
+
 ```py
 def find_anag(word_dict, letters):
     word_permu = permut(letters)
@@ -185,7 +187,7 @@ import nothing
 That didn't work too well, so I changed it.
 
 ## Step Through
-*Step by step the logic of the solver*
+*Step by step the logic of the solver*  
 *Keep it succinct*
 
 ## Preprocessing
