@@ -46,7 +46,15 @@ def get_word_list(url):
                     if item.text.isalnum():
                         # using lower here as there are duplicates otherwise
                         # also to keep the set cleaner
-                        words.add(item.text.lower())
+
+                        # There are some groups and placenames like YMCA
+                        # To remove these then edit the line below to 
+                        # ignore words with caps
+                        if item.text.islower():
+                            words.add(item.text)
+                        else:
+                            # print(item.text)
+                            words.add(item.text.lower())
             else:
                 list_empty = 1
         # finally:
