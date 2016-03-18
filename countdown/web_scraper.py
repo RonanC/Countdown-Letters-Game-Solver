@@ -6,13 +6,17 @@ This module searches the oxford learners dictionary website,
 pulls down all word lists,
 and combines them into one large dictionary.
 
-References:
-http://docs.python-guide.org/en/latest/scenarios/scrape/
+All words are unique and lowercase.
+Words are gathered from the url_list textfile.
+
+Once processing is complete the wordlist
+it saved to a pickle and a text file.
 """
 
 import requests
 from bs4 import BeautifulSoup
 import pickle
+
 
 def get_word_list(url):
     print("At url: ", url)
@@ -71,27 +75,36 @@ def get_new_words(base_url):
                 if item.text.isalnum():
                     words.add(item.text.lower())
 
-    print('Words Found: ', len(words), '\n')
+    print('New Words Found: ', len(words), '\n')
     return words
 
 
-def save_words(words, filename, serialize=1):
-    if serialize == 1:
-        filename += '.pkl'
-        output = open(filename, 'wb')
+def save_words(words, filename, serialize=2):
+    def pkl_words():
+        pkl_filename = filename + '.pkl'
+        output = open(pkl_filename, 'wb')
         pickle.dump(words, output)
         output.close()
-        print("serialized words to ", filename)
-    else:
-        filename += '.txt'
-        file = open(filename, 'w')
+        print("serialized words to ", pkl_filename)
+
+    def txt_words():
+        txt_filename = filename + '.txt'
+        file = open(txt_filename, 'w')
         for word in words:
-            file.write('%s\n', word)
+            file.write('%s\n' % word)
         file.close()
-        print("saved words to ", filename)
+        print("saved words to ", txt_filename)
+
+    if serialize == 0:
+        pkl_words()
+    elif serialize == 1:
+        txt_words()
+    else:
+        pkl_words()
+        txt_words()
 
 
-def main():
+def web_scraper():
     url_list = []
     word_set = set()
     base_url = 'http://www.oxfordlearnersdictionaries.com'
@@ -110,8 +123,8 @@ def main():
             new_url = base_url + item[0] + categ
             url_list.append(new_url)
 
-    # for url in url_list:
-        # word_set = set(list(word_set) + list(get_word_list(url)))
+    for url in url_list:
+        word_set = set(list(word_set) + list(get_word_list(url)))
 
     # the new words page has a different structure
     word_set = set(list(word_set) + list(get_new_words(base_url)))
@@ -122,6 +135,7 @@ def main():
     print(words_sorted, '\n')
     print('Total Words Found: ', len(words_sorted), '\n')
 
-    save_words(words_sorted, 'word_list', 0)
+    save_words(words_sorted, 'word_list')
 
-main()
+
+web_scraper()
