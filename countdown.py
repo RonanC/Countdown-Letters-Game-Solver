@@ -16,6 +16,7 @@ See other module headers for more information.
 """
 
 from web_scraper import web_scraper
+from anagram_solver import letter_gen
 import sys
 
 
@@ -50,6 +51,7 @@ def run_solvers():
 
 def create_letters():
     print('Creating random letters...')
+    letter_gen.run()
 
 
 def create_dict():
