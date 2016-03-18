@@ -9,6 +9,7 @@ then it orders the list by string length
 It expects a list of letters.
 """
 
+words = set()
 
 def permuter(letters):
     words.add(letters)
@@ -28,6 +29,10 @@ def permut(letters):
     # based on whatever the key function returns
     srt_words.sort(key=lambda s: len(s), reverse=1)
 
+    # Needs to be cleared, otherwise is grows
+    # as countdown.py calls it
+    words.clear()
+
     # result
     return srt_words
 
@@ -36,7 +41,6 @@ def main():
     letters = 'hello'
     print(permut(letters))
 
-words = set()
 
 if __name__ == '__main__':
     main()

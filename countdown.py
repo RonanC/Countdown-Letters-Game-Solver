@@ -16,7 +16,8 @@ See other module headers for more information.
 """
 
 from web_scraper import web_scraper
-from solver import letter_gen, solver
+from solver.letter_gen import letter_gen
+from solver.solver import solver
 import sys
 
 
@@ -47,12 +48,12 @@ def main_menu():
 
 def run_solvers():
     print('Running solvers....')
-    solver.run()
+    solver()
 
 
 def create_letters():
     print('Creating random letters...')
-    letter_gen.run()
+    print(letter_gen())
 
 
 def create_dict():

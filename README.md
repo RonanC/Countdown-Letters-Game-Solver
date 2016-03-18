@@ -63,7 +63,6 @@ The cherry on top was to implement my packages into a flask application and host
 I updated this document constantly during my journey through this project.  
 I added anything of interest or that stood out, be it big efficiency spikes or drawbacks that I came accross.  
 
-
 ## Words list
 My words list is in the file [wordslist.txt][12] in this repoistory/gist.  
 I got my words list from the [Oxford Learner's Dictionaries][13] website.  
@@ -77,6 +76,10 @@ My program downloads the Oxford3000, Academic, Pictures, Usage Notes, and New Wo
 
 The words are then saved to a text and a pickle file, to be later utilized by the main program.
 
+It takes approximately 2 to 3 minutes to download, analyse, clean, sort and pickle/txt the data.
+
+Altough the saving of the end result (word list) is almost instantaneous.
+
 ## Architecture/Structure
 The main point of access for my program is `countdown.py` which is in the main folder.  
 This file accesses the scripts in sub-directories, this keeps things modular and more pythonic.  
@@ -88,6 +91,33 @@ The `letter_gen.py` module create a random nine letter list with at least three 
 ```py
 consons = [x for x in letters if x not in vowels]
 ```
+
+## Permutation Generator
+I created a module for generating all possible permutations of a sorted word.  
+My script is in the [permut.py][16] file, inside the [solver][17] directory.
+This doesn't take long since the word is sorted.  
+Taking some inspiration from *Scheme* I created a recursive function.
+
+First we create a global set:  
+```py
+words = set()
+```
+
+Next we have the recursive function:
+```py
+def permuter(letters):
+    words.add(letters)
+    if len(letters) > 1:
+        permuter(letters[:-1])
+        permuter(letters[1:])
+```
+This function adds each letter to the set.  
+While testing I found that there were a few duplicates when using the list.  
+Using a set prevents this with it's in built, highly efficient membership testing.  
+Due to the fact the the word is sorted we only need to check a smaller sub set of the word, either clipping the front letter or the rear letter.
+
+If I used a list and tweaked this algorithm it would be more efficient.  
+After much time I could not figure it out.
 
 ## Python script
 My script is in the files [solver.py][14] in this repository and it works as follows.  
@@ -110,8 +140,14 @@ That didn't work too well, so I changed it.
 *Step by step what the main module does*
 
 ## Preprocessing
-My script does a lot of preprocessing, which only needs to be run once.  
-Once the preprocessing is done we can run the game solver again and again without that overhead.
+My program does a lot of preprocessing.  
+There are a few generated files that are already processed, which are serialized via pickle, these files are loaded in which saves much time.
+
+When running the program (with defaults of loading serialized data in via pickle) then the only processing that takes place is the permutations on the sorted word and the search of the max 30 possible keys in the dictionary.  
+This is extremely fast. Due to the fact that the dictionary already has all the possible permutations stored at a key of the sorted word.  
+The word list used by the dictionary generator is also saved via pickle which makes the dictionary generation even quicker.  
+
+For more information on the word list check out the `Words list` heading above.
 
 ### 1: sorting with a dictionary
 This version of the solver took the biggest preprocessing time.  
@@ -184,3 +220,9 @@ My script runs very quickly, and certainly within the 30 seconds allowed in the 
 
 [15]: http://docs.python-guide.org/en/latest/scenarios/scrape/
 [[15]]: HTML Scraping
+
+[16]: https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/solver/permut.py
+[[16]]: permut.py file
+
+[17]: https://github.com/RonanC/Countdown-Letters-Game-Solver/tree/master/solver
+[[17]]: solver directory
