@@ -1,0 +1,8 @@
+/english/oxford3000/Oxford3000_, A-B, C-D, E-G, H-K, L-N, O-P, Q-R, S, T, U-Z
+/american_english/oxford3000/Oxford3000_, A-B, C-D, E-G, H-K, L-N, O-P, Q-R, S, T, U-Z
+/english/academic/AcademicWordList_sublist_, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+/american_english/academic/sublist, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10
+/english/pictures/PictureList_, A-B, C-D, E-G, H-K, L-N, O-P, Q-R, S, T, U-Z
+/american_english/pictures/PictureList_, A-B, C-D, E-G, H-K, L-N, O-P, Q-R, S, T, U-Z
+/english/usage_notes/UsageNoteList_, British_x200B_American, Collocations, Culture, Express_Yourself, Extra_examples, Grammar_Point, Language_Bank, More_About, More_Like_This, Synonyms, Vocabulary_Building, Which_Word_, Word_Family, Wordfinder
+/american_english/usage_notes/UsageNoteList_, AWL_Collocations, Grammar, Language_Bank, More_About, Thesaurus, Topic_Collocations, Vocabulary_Building, Which_Word_, Word_Family

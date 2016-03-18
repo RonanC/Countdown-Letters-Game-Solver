@@ -12,7 +12,7 @@ http://docs.python-guide.org/en/latest/scenarios/scrape/
 
 import requests
 from bs4 import BeautifulSoup
-
+import pickle
 
 def get_word_list(url):
     print("At url: ", url)
@@ -28,22 +28,67 @@ def get_word_list(url):
         html_doc = requests.get(url + str(pageNum)).text
         soup = BeautifulSoup(html_doc, 'html.parser')
 
-        item_list = soup.find_all('ul')[4]
-
-        if item_list.text.split():
-            print('Page num: ', str(pageNum))
-            for item in item_list.find_all('a'):
-                # excludes any word with a space,
-                # hyphen or other non alpha-numeric
-                if item.text.isalnum():
-                    # using lower here as there are duplicates otherwise
-                    # also to keep the set cleaner
-                    words.add(item.text.lower())
-        else:
+        try:
+            item_list = soup.find_all('ul')[4]
+        except Exception as e:
+            print("exception: ", e)
             list_empty = 1
+        else:
+            if item_list.text.split():
+                print('Page num: ', str(pageNum))
+                for item in item_list.find_all('a'):
+                    # excludes any word with a space,
+                    # hyphen or other non alpha-numeric
+                    if item.text.isalnum():
+                        # using lower here as there are duplicates otherwise
+                        # also to keep the set cleaner
+                        words.add(item.text.lower())
+            else:
+                list_empty = 1
+        # finally:
+            #  uncomment in order to check all urls
+            #  will only add first page of each
+            # list_empty = 1
 
     print('Words Found: ', len(words), '\n')
     return words
+
+
+def get_new_words(base_url):
+    words = set()
+    url = base_url + '/new_words'
+
+    html_doc = requests.get(url).text
+    soup = BeautifulSoup(html_doc, 'html.parser')
+
+    try:
+        item_list = soup.dd
+    except Exception as err:
+        print(err)
+    else:
+        if item_list.text.split():
+            for item in item_list.find_all('a'):
+                if item.text.isalnum():
+                    words.add(item.text.lower())
+
+    print('Words Found: ', len(words), '\n')
+    return words
+
+
+def save_words(words, filename, serialize=1):
+    if serialize == 1:
+        filename += '.pkl'
+        output = open(filename, 'wb')
+        pickle.dump(words, output)
+        output.close()
+        print("serialized words to ", filename)
+    else:
+        filename += '.txt'
+        file = open(filename, 'w')
+        for word in words:
+            file.write('%s\n', word)
+        file.close()
+        print("saved words to ", filename)
 
 
 def main():
@@ -51,42 +96,32 @@ def main():
     word_set = set()
     base_url = 'http://www.oxfordlearnersdictionaries.com'
     base_url += '/wordlist'
-    # /english/oxford3000
 
-    # lang
-    f = open('url_lang.txt', 'r')
-    url_lang = []
-    for line in f:
-        url_lang.append(line.strip())
-    f.close()
+    # url list
+    file = open('url_list.txt', 'r')
+    url_items = []
+    for line in file:
+        exts = [x.strip() for x in line.split(',')]
+        url_items.append(exts)
+    file.close()
 
-    #  label
-    f = open('url_label.txt', 'r')
-    url_label = []
-    for line in f:
-        url_label.append(line.strip())
-    f.close()
+    for item in url_items:
+        for categ in item[1:]:
+            new_url = base_url + item[0] + categ
+            url_list.append(new_url)
 
-    #  category
-    f = open('url_categ.txt', 'r')
-    url_categ = []
-    for line in f:
-        url_categ.append(line.strip())
-    f.close()
+    # for url in url_list:
+        # word_set = set(list(word_set) + list(get_word_list(url)))
 
-    for label in url_label:
-        for lang in url_lang:
-            for categ in url_categ:
-                new_url = base_url + lang + label + categ
-                url_list.append(new_url)
-
-    for url in url_list:
-        word_set = set(list(word_set) + list(get_word_list(url)))
+    # the new words page has a different structure
+    word_set = set(list(word_set) + list(get_new_words(base_url)))
 
     # words_sorted = sorted(list(word_set), key=lambda s: s.lower())
     words_sorted = sorted(list(word_set))
 
     print(words_sorted, '\n')
     print('Total Words Found: ', len(words_sorted), '\n')
+
+    save_words(words_sorted, 'word_list', 0)
 
 main()
