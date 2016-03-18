@@ -140,7 +140,7 @@ My script runs very quickly, and certainly within the 30 seconds allowed in the 
 [11]: http://requests.readthedocs.org/en/master/
 [[11]]: Requests - The only Non-GMO HTTP library for Python
 
-[12]: wordlist.txt
+[12]: countdown/word_list.txt
 [[12]]: wordlist.txt file
 
 [13]: http://www.oxfordlearnersdictionaries.com/wordlist/
