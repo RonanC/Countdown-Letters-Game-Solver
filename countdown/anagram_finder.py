@@ -1,5 +1,5 @@
 """
-anagram_finder
+countdown.anagram_finder
 ~~~~~~~~~~~~
 
 This module finds all possible anagrams from a given list of letters.

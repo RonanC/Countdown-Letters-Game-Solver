@@ -1,5 +1,5 @@
 """
-timing
+countdown.timing
 ~~~~~~~~~~~~
 
 This module times the various anagram solvers.

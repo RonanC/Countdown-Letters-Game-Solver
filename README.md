@@ -49,8 +49,7 @@ This helped me in understanding word permutations at a deeper level in Python.
 ### Coding it up
 
 My third task was to get the wordlist, I decided to create a webscraper to do this for me.  
-I used the [BeautifulSoup][10] package in order to do this.  
-I also considered using the HTTP [Requests library][11] in order to download a wordlist file from a webpage via a HTTP Get request.
+I used the [BeautifulSoup][10] package alongside the [Requests library][11] in order to download the various Oxford wordlists and parse them.
 
 The next task was to focus primarily on trying various techniques in order to find all of the words from the nine letters given.
 
@@ -148,3 +147,5 @@ My script runs very quickly, and certainly within the 30 seconds allowed in the 
 
 [14]: solver.py
 [[14]]: solver.py file
+
+

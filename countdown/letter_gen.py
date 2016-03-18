@@ -1,5 +1,5 @@
 """
-letter_gen
+countdown.letter_gen
 ~~~~~~~~~~~~
 
 This module generates random letters.
