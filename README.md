@@ -5,12 +5,12 @@ A Python script that solves the Countdown letters game, and a readme explaining 
 
 ## Introduction
 This project was created as part of my Theory of Algorithms module in college.  
-The basic project brief was to create an algorithm in Python to solve the Countdown Conundrum game where you have a nine letter word consisting of at least three vowels and four consonants. 
+The basic project brief was to create an algorithm in Python to solve the Countdown Conundrum game where you have a nine letter word consisting of at least three vowels and four consonants.
 The goal is to create the most efficient algorithm as possible, keeping track of different approaches, timing each algorithm, checking performance, memory usage and basically doing a lot of analysis.  
 This project gives insight into really digging deep into algorithms and not just trying to create a complete solution but an optimal solution.  
 All findings during analysis and through the progression of this project will be listed in this readme, in the commit history and in the issue tracker.  
 
-Offical Project Brief: [Project Brief][1]
+Official Project Brief: [Project Brief][1]
 
 ## Background
 ### General Research
@@ -108,12 +108,12 @@ My script runs very quickly, and certainly within the 30 seconds allowed in the 
 
 ## References
 [1]: https://gist.github.com/ianmcloughlin/cc5340ee080bd135919a
-[[1]]: Project Brief 
+[[1]]: Project Brief
 
 [2]: https://www.codeschool.com/learn/python
 [[2]]: Codeschool Python Courses (2)
 
-[3]: https://www.codeschool.com/screencasts/soup-to-bits-flying-through-python 
+[3]: https://www.codeschool.com/screencasts/soup-to-bits-flying-through-python
 [[3]]: Codeschool Python Screencast
 
 [4]: https://talkpython.fm/
@@ -151,5 +151,3 @@ My script runs very quickly, and certainly within the 30 seconds allowed in the 
 
 [15]: http://docs.python-guide.org/en/latest/scenarios/scrape/
 [[15]]: HTML Scraping
-
-
