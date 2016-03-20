@@ -15,14 +15,17 @@ This project:
 See other module headers for more information.
 """
 
-from web_scraper import web_scraper
-from solver.letter_gen import letter_gen
-from solver.solver import solver
+from web_scraper.web_scraper import web_scraper
+from solver import timing, solver, letter_gen
 import sys
 
 
 def main_menu():
-    options = {0: quit, 1: create_dict, 2: create_letters, 3: run_solvers}
+    options = {
+        0: quit, 1: create_word_list, 2: create_letters, 3: run_solver,
+        4: time_solver, 5: time_preproc, 6: save_dict
+    }
+
     prompt = '> '
 
     #  0: false
@@ -30,9 +33,12 @@ def main_menu():
     while 1:
         print('\n~~~~~Countdown~~~~~')
         print('~~~~~~~~~~~~~~~~~~~')
-        print('1:\tCreate Dictionary')
+        print('1:\tCreate Word List')
         print('2:\tCreate Random Letters')
-        print('3/ent:\tRun Solvers')
+        print('3/ent:\tRun Solver')
+        print('4:\tRun Solver (timed)')
+        print('5:\tTime Preprocessing')
+        print('6:\tCreate & Save dictionary')
         print('0:\tQuit\n')
 
         str_choice = input(prompt)
@@ -49,17 +55,34 @@ def main_menu():
             print('Integers (or enter key) only.')
 
 
-def run_solvers():
-    print('Running solvers....')
-    solver()
+def run_solver():
+    print('Running solver....')
+    letters = letter_gen.letter_gen()
+    print("Letters:\t%s" % letters)
+    solver.find_anag(solver.load_word_dict(), letters, 1)
+
+
+def time_solver():
+    timing.time_solver()
+
+
+def time_preproc():
+    timing.time_preproccesing()
+
+
+def save_dict():
+    # loads word list, creates dictionary, saves it to pickle
+    word_list = solver.load_word_list()
+    word_dict = solver.create_word_dict(word_list)
+    solver.save_word_dict(word_dict, 1, 0)
 
 
 def create_letters():
     print('Creating random letters...')
-    print(letter_gen())
+    print(letter_gen.letter_gen())
 
 
-def create_dict():
+def create_word_list():
     print('\nThis may take up to 2/3 mins to complete.')
     print('1:\tContinue')
     print('0:\tCancel')
@@ -69,7 +92,7 @@ def create_dict():
         choice = int(str_choice)
         if choice == 1:
             print('Creating dictionary...')
-            web_scraper.run()
+            web_scraper()
         else:
             print('Cancelled')
     else:

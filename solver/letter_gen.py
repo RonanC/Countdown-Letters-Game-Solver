@@ -41,7 +41,7 @@ def letter_gen():
     return my_letters
 
 def main():
-    letter_gen()
+    print(letter_gen())
 
 if __name__ == '__main__':
     main()

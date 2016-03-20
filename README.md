@@ -203,7 +203,7 @@ For more information on the word list check out the `Words list` heading above.
 ## Solver Algorithms (versions)
 I decided to set my self the task of creating three different solver algorithms.  Since this project is all about the theory of algorithms I thought it would be worth while to cover not just the depth of algorithms but breadth as well. I feel like this is advantageous due to the fact that when you are faced with the same algorithm for days on end you can develop tunnel vision. By switching to another style of algorithm and coming up with new insights, by the time I finish up and revisit the previous algorithm there will more then likely be a Eureka moment.
 
-### Sorted words in dictionary
+### Sorted words in dictionary (final/main algorithm)
 This version of the solver took the biggest preprocessing time, as the whole words list needed be sorted, turned into a dictionary and pickled.
 Once complete we can reap the rewards of a much lower permutation check on any given word.
 
@@ -240,17 +240,137 @@ If all the vowels are the same and the consonants also the same then we have:
 ### Heaps algorithm (customized)
 *TODO*
 
-## Efficiency
-Here's some stuff about how efficient my code is, including an analysis of how many calculations my algorithm requires.
+### conclusion
+The sorted words in a dictionary ended up being the fasted, due mainly in part to the preprocessing and small dictionary size, however if you have a very large dictionary (that changes over time) and need to only calculate anagrams for a small number of jumbled words then the **custom hashing** would be better suited, but this is a very limited scenario.
+
+If the use case of this algorithm is to be a web/mobile app where users input letters and get anagrams then the sorted dictionary processing algorithm is better as we will only need to do the preprocessing once and will be serving many requests (among all the users).
+
+Even if it was an offline application the preprocessing is still okay as we can pickle (serialize) the dictionary before putting the application on the store.
+
+If the dictionary cannot be saved and we must process all the words for each single request, then this algorithm is less viable.
+
+
+### Efficiency
+I've talked about the pre-processing and algorithms above.
+I mentioned how many calculations my permutations algorithm takes.
+
+Here I will go through the time each algorithm takes, and how much CPU and memory each uses.
+If no algorithm is mentioned then I am speaking about he sorted word dictionary.
+
+If the show flag is set to 1, an if statement will show the output of the letters, found anagrams, and number of attempts.
+When running the algorithm for the defaulted 1000 times this if statement is ran each time.
+
+I removed the if statement and it had made no effect to the performance.
 
 ## Timing
-*the results of all variations*
+### Preproceesing time
+This involves loading in the word dictionary (unpickle/unserialize),
+Sorting each word, finding each permutation of that sorted word (discussed above under the *Sorted words in dictionary* heading),
+and then finally creating the dictionary by using the sorted word as the key.
+
+This takes `0.02294115200129454` seconds.
+You should take into account that the total words in the Oxford Word Lists are approx 11,000.
+
+####V1 - Sorted Word Dictionary
+This was my original analysis where I printed 1000 and 10,000 times.
+I tested it with output on and off.
+
+**With print (1,000):**
+```
+11.675327009000284
+11.296415551000337
+11.303801694000413
+```
+
+**Without print (1,000):**
+```
+9.122691438999937
+9.29408249900007
+9.137007385999823
+```
+
+**With print (10,000):**
+```
+111.1710740339995
+```
+
+**Without print (10,000):**
+```
+95.93674115300018
+```
+
+We can see a clear difference when turning off the print statements.
+
+###V2 - removed dict load
+I the realized that I was loading the dictionary in each time.
+This is part of the preprocessing.
+I was shocked at the improvements.
+
+**With print (1,000):**
+```
+0.5546017859996937
+0.5734935639993637
+0.5514507379994029
+```
+
+22 times faster (11 / 0.5)
+
+**Without print (1,000):**
+```
+0.2962503909984662
+0.3058995000028517
+0.30122587000005296
+```
+
+Here we noticed a bigger difference in the output being turned off.
+30 times faster (9 / 0.3)
+
+**With print (10,000):**
+```
+6.038021037998988
+6.296833869000693
+5.4718684629988275
+6.244787717998406
+```
+
+18 times faster (111 / 5)
+
+**Without print (10,000):**
+```
+3.0099240979980095
+2.9975806299989927
+2.9792075869991095
+2.9062734180006373
+2.9962728889986465
+```
+
+32 times faster (96 / 3).
+
+### if statements for output removed
+We do not see any difference. 
+
+**Without print (1,000):**
+```
+0.30075044499972137
+0.28801490999831003
+0.32457313800114207
+```
+
+**Without print (10,000):**
+```
+3.030269856000814
+2.984034207998775
+2.959833992001222
+3.0004114049988857
+```
 
 ## Memory
 *screen shots of memory usage*
 
 ## Results
-My script runs very quickly, and certainly within the 30 seconds allowed in the Countdown letters game.
+The countdown games give it's players 30 seconds to find the best anagram.
+
+My script finds the answers in:
 
 ## References
 [1]: https://gist.github.com/ianmcloughlin/cc5340ee080bd135919a

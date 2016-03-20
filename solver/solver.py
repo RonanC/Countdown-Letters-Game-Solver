@@ -15,16 +15,20 @@ This is due to the sorting of the works in the dictionary.
 # init
 import pickle
 from collections import defaultdict
-if __name__ == '__main__':
+# when main calls a function that calls a function
+# the __main__ no longer works, hence the below line
+if __name__ != 'countdown' and __name__ != 'solver.solver': #  local
+    # print('__name__: %s' % __name__)
     from letter_gen import letter_gen
     from permut import permut
-else:
+else:   # __main__
     from solver.letter_gen import letter_gen
     from solver.permut import permut
 
 
 def load_word_list():
-    if __name__ == "__main__":
+    if __name__ != 'countdown' and __name__ != 'solver.solver': #  local
+        print('__name__: %s' % __name__)
         word_list_file = "../web_scraper/word_list"
     else:
         word_list_file = "web_scraper/word_list"
@@ -36,8 +40,8 @@ def load_word_list():
     return word_list
 
 
-def save_word_dict(word_dict, serialize=2):
-    if __name__ == "__main__":
+def save_word_dict(word_dict, show_output=1, serialize=2):
+    if __name__ != 'countdown' and __name__ != 'solver.solver':
         filename = 'word_dict'
     else:
         filename = 'solver/word_dict'
@@ -47,7 +51,8 @@ def save_word_dict(word_dict, serialize=2):
         output = open(pkl_filename, 'wb')
         pickle.dump(word_dict, output)
         output.close()
-        print("serialized words to ", pkl_filename)
+        if show_output == 1:
+            print("serialized words to %s" % pkl_filename)
 
     def txt_words():
         txt_filename = filename + '.txt'
@@ -55,7 +60,8 @@ def save_word_dict(word_dict, serialize=2):
         for key, value in word_dict.items():
             file.write('%s\t%s\n' % (key, value))
         file.close()
-        print("saved words to ", txt_filename)
+        if show_output == 1:
+            print("saved words to %s" % txt_filename)
 
     if serialize == 0:
         pkl_words()
@@ -67,7 +73,7 @@ def save_word_dict(word_dict, serialize=2):
 
 
 def load_word_dict():
-    if __name__ == "__main__":
+    if __name__ != 'countdown' and __name__ != 'solver.solver':
         word_dict_file = "word_dict"
     else:
         word_dict_file = "solver/word_dict"
@@ -89,7 +95,7 @@ def create_word_dict(word_list):
     return word_dict
 
 
-def find_anag(word_dict, letters):
+def find_anag(word_dict, letters, show_output=1):
     word_permu = permut(letters)
     # print(word_permu)
 
@@ -101,15 +107,16 @@ def find_anag(word_dict, letters):
         if anagrams != 'empty':
             break
 
-    print('Anagrams:\t%s' % anagrams)
-    print('Attempts:\t%s\n' % count)
+    if show_output == 1:
+        print('Anagrams:\t%s' % anagrams)
+        print('Attempts:\t%s\n' % count)
 
 
-def solver():     
+def solver(letters, show_output=1):
     # Create a new word dict
     # word_dict = create_word_dict(load_word_list())
     # Save word dict
-    # save_word_dict(word_dict)
+    # save_word_dict(word_dict, show_output)
 
     # load dict
     word_dict = load_word_dict()
@@ -119,14 +126,16 @@ def solver():
 
     # get random 9 letters
     letters = letter_gen()
-    print('Letters:\t%s' % letters)
+    if show_output == 1:
+        print('Letters:\t%s' % letters)
 
     # solver via dictionary and sorting
-    find_anag(word_dict, letters)
+    find_anag(word_dict, letters, show_output)
 
 
 def main():
-    solver()
+    letters = letter_gen()
+    solver(letters)
 
 if __name__ == "__main__":
     main()

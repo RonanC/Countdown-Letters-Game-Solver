@@ -145,8 +145,9 @@ def web_scraper():
     save_words(words_sorted, filename)
 
 
-def run():
+def main():
     web_scraper()
 
+
 if __name__ == "__main__":
-    run()
+    main()
