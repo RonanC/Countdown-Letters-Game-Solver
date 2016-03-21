@@ -1,4 +1,7 @@
 """
+web_scraper.save_words
+~~~~~~~~~~~~~~~~~~~~~~
+
 Saves the word list serialized and/or as a text file.
 """
 
@@ -6,6 +9,9 @@ import pickle
 
 
 def save_words(words, filename, serialize=2):
+    """
+    Saves the scraped words into a pickle and text file.
+    """
     if __name__ != 'countdown' and __name__ != 'solver.nines':
         filename = filename
     else:

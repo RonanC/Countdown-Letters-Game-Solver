@@ -14,6 +14,9 @@ import pickle
 from random import choice, shuffle
 
 def save_nines(words, filename, serialize=2):
+    """
+    Saves the nine lettter word list to a text and pickle file.
+    """
     def pkl_words():
         pkl_filename = filename + '.pkl'
         output = open(pkl_filename, 'wb')
@@ -39,6 +42,9 @@ def save_nines(words, filename, serialize=2):
 
 
 def load_nines():
+    """
+    Loads the nine letter word file from pickle format.
+    """
     if __name__ != 'countdown' and __name__ != 'solver.solver':
         # print('__name__: %s' % __name__)
         nines_list_file = "nines_list"
@@ -53,6 +59,9 @@ def load_nines():
 
 
 def word_picker():
+    """
+    Chooses a random word from the nine letter words file and shuffles the letters up.
+    """
     # picks a nine letter word, shuffles it, and returns it.
     nines_list = load_nines()
     word = choice(nines_list)
@@ -62,6 +71,9 @@ def word_picker():
 
 
 def gen_nines(length=9):
+    """
+    Finds all words of length nine and adds them to a list.
+    """
     # create a list of words
     word_list = solver.load_word_list()
     nines_list = []
@@ -74,6 +86,9 @@ def gen_nines(length=9):
 
 
 def main():
+    """
+    Test function.
+    """
     print(word_picker())
 
 

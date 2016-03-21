@@ -9,11 +9,16 @@ then it orders the list by string length
 It expects a list of letters.
 """
 
+# global words list
 words = set()
+# use count to check max permutations (not unique ones)
 # count = []
 
 
 def permuter(letters):
+    """
+    Finds all possible permutations of a sorted word.
+    """
     words.add(letters)
     # count.append(letters)
     if len(letters) > 1:
@@ -22,6 +27,9 @@ def permuter(letters):
 
 
 def permut(letters):
+    """
+    Gets the word ready for permutation checking, sorts the permutations by word length and returns this.
+    """
     srt_lttrs = ''.join(sorted(letters))
     permuter(srt_lttrs)
 
@@ -41,6 +49,9 @@ def permut(letters):
 
 
 def main():
+    """
+    Test function.
+    """
     letters = 'eeeffffee'
     permuts = permut(letters)
     print(len(permuts))

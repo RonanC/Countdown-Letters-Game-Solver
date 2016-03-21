@@ -23,6 +23,10 @@ else:
 
 
 def get_word_list(url):
+    """
+    Gets all the words on the current URL.
+    Goes through each page until empty.
+    """
     print("At url: ", url)
     url += '/?page='
     words = set()
@@ -71,6 +75,9 @@ def get_word_list(url):
 
 
 def get_new_words(base_url):
+    """
+    Gets all the new words from the new words page.
+    """
     words = set()
     url = base_url + '/new_words'
 
@@ -92,6 +99,9 @@ def get_new_words(base_url):
 
 
 def get_url_list(base_url, url_file):
+    """
+    Loads in the list of urls and creates the url list.
+    """
     url_list = []
 
     file = open(url_file, 'r')
@@ -110,6 +120,9 @@ def get_url_list(base_url, url_file):
 
 
 def get_words(base_url, url_list):
+    """
+    Goes through each url and calls the get_word_list function on them.
+    """
     word_set = set()
 
     # all word lists except new_words
@@ -129,6 +142,9 @@ def get_words(base_url, url_list):
 
 
 def web_scraper():
+    """
+    Runs the other modules in the module.
+    """
     base_url = 'http://www.oxfordlearnersdictionaries.com'
     base_url += '/wordlist'
 
@@ -146,6 +162,9 @@ def web_scraper():
 
 
 def main():
+    """
+    Test function.
+    """
     web_scraper()
 
 

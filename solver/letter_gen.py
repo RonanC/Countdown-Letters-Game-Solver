@@ -15,6 +15,9 @@ from random import choice, shuffle
 
 
 def letter_gen():
+    """
+    Generates nine random letters with a min of 3 vowels and 4 consonants.
+    """
     letters = list(string.ascii_lowercase)
     vowels = ['a', 'e', 'i', 'o', 'u']
     consons = [x for x in letters if x not in vowels]
@@ -41,6 +44,9 @@ def letter_gen():
     return my_letters
 
 def main():
+    """
+    Test function.
+    """
     print(letter_gen())
 
 if __name__ == '__main__':

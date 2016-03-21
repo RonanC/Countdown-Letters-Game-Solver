@@ -17,6 +17,9 @@ else:
 
 
 def time_preproccesing(dict_choice, num_times=1):
+    """
+    Times the preprocessing.
+    """
     # print('__name__: %s' % __name__)
     setupOx = """
 if __name__ != 'countdown' and __name__ != 'timeit':
@@ -54,6 +57,9 @@ def run():
 
 
 def time_solver(dict_choice):
+    """
+    Runs the solver a chosen number of iterations and times it.
+    """
     show_output = 0
     print('With or without print output?')
     print('1/ent:\tWithout Print')
@@ -122,6 +128,9 @@ def run(show_output):
 
 
 def main():
+    """
+    Test function.
+    """
     time_solver()
 
 if __name__ == '__main__':
