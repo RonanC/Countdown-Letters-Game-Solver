@@ -394,21 +394,20 @@ We can see an increase of 8% here.
 ## Memory
 ###Version 1: (loading dictionary each time) 10'000 iterations
 ####CPU
-We can see a large decrease in CPU when the print statement is turned off.
-**with print**
+We can see a large decrease in CPU when the print statement is turned off.  
+**with print**  
 ![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/resources/v1-cpu-with-print-10000.png "v1-cpu-with-print-10000")
 
+**without print**  
 
-
-**without print**
 ![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/resources/v1-cpu-without-print-10000.png "v1-cpu-without-print-10000")
 
 ####Memory
-We can see a decrease of 0.02 GB (20 megabytes) when the print statement is off.
-**with print**
+We can see a decrease of 0.02 GB (20 megabytes) when the print statement is off.  
+**with print**  
 ![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/resources/v1-mem-with-print-10000.png "v1-mem-with-print-10000")
-
-**without print**
+  
+**without print**  
 ![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/resources/v1-mem-without-print-10000.png "v1-mem-without-print-10000")
 
 ###Version 2: (dictionary loaded once) 100'000 iterations
@@ -416,10 +415,10 @@ I ran the new version watching the cpu and memory usage in the OSX Activity Moni
 The memory of the process stayed at 22M for the entire time.  
 The CPU went to 80% and stayed there.
 Here is a screen shot in `top` of before and after running the 100'000 iterations:
-**stand by**
+**stand by**  
 ![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/resources/v2-standby-top.png "v2-standby-top")
-
-**running**
+  
+**running**  
 ![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/resources/v2-running-top.png "v2-running-top")
 
 ## Results
