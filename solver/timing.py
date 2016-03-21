@@ -21,7 +21,7 @@ if __name__ != 'countdown' and __name__ != 'timeit':
     import solver
 else:
     from solver import solver
-print('__name__: %s' % __name__)
+
 def run():
     word_list = solver.load_word_list()
     word_dict = solver.create_word_dict(word_list)
@@ -87,11 +87,11 @@ def run(show_output):
     if str_choice.isdigit():
         choice = int(str_choice)
         if choice >= num_min and choice <= num_max:
-            print(t.timeit(choice))
+            print('Took %s seconds.' % t.timeit(choice))
         else:
             print('Cancelled')
     elif str_choice == '':
-        print(t.timeit(num_def))
+        print('Took %s seconds.' % t.timeit(num_def))
     else:
         print('Cancelled')
 

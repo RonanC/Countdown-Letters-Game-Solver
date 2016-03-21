@@ -6,6 +6,11 @@ import pickle
 
 
 def save_words(words, filename, serialize=2):
+    if __name__ != 'countdown' and __name__ != 'solver.nines':
+        filename = filename
+    else:
+        filename = 'solver/' + filename
+
     def pkl_words():
         pkl_filename = filename + '.pkl'
         output = open(pkl_filename, 'wb')

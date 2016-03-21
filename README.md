@@ -254,8 +254,7 @@ If the dictionary cannot be saved and we must process all the words for each sin
 I've talked about the pre-processing and algorithms above.
 I mentioned how many calculations my permutations algorithm takes.
 
-Here I will go through the time each algorithm takes, and how much CPU and memory each uses.
-If no algorithm is mentioned then I am speaking about he sorted word dictionary.
+Here I will go through the sorted word dictionary algorithm since it is my champion algorithm.
 
 If the show flag is set to 1, an if statement will show the output of the letters, found anagrams, and number of attempts.
 When running the algorithm for the defaulted 1000 times this if statement is ran each time.
@@ -269,7 +268,7 @@ Sorting each word, finding each permutation of that sorted word (discussed above
 and then finally creating the dictionary by using the sorted word as the key.
 
 This takes `0.02294115200129454` seconds.
-You should take into account that the total words in the Oxford Word Lists are approx 11,000.
+You should take into account that the total relevant words in the Oxford Word Lists is 10,938 (which led to 10,535 keys in the dictionary).
 
 ####V1 - Sorted Word Dictionary
 This was my original analysis where I printed 1000 and 10,000 times.
@@ -364,13 +363,70 @@ We do not see any difference.
 3.0004114049988857
 ```
 
+If you pass in jumbled nine letter words (that for sure have an anagram) then the algorithm is even faster, due to the fact that we find the anagram on the first attempt, rather then checking all the different variations of the word (length 7, 6, 5, 4, etc).
+Also since we don't need to generate random 9 letters this speeds it up.
+To pick a random word from a list is quicker.
+
+When I run the tests they change depending on the computers state.
+At the time of this test, the seconds it took without print, for 1000 iterations was on average:
+**Random letter generation:**
+`0.3499353360020905`
+**Jumbled nine letters:**
+`0.32855197400203906`
+
+For 10'000 iterations:
+**Random letter generation:**
+`3.4030903020029655`
+**Jumbled nine letters:**
+`3.156134046999796`
+
+We can see an increase of 8% here.
+
 ## Memory
-*screen shots of memory usage*
+###Version 1: (loading dictionary each time) 10'000 iterations
+####CPU
+**with print**
+
+
+**without print**
+
+
+####Memory
+**with print**
+
+
+**without print**
+
+###Version 2: (dictionary loaded once) 10'000 iterations
+####CPU
+**with print**
+
+
+**without print**
+
+
+####Memory
+**with print**
+
+
+**without print**
 
 ## Results
 The countdown games give it's players 30 seconds to find the best anagram.
 
 My script finds the answers in:
+`0.01677970700256992` seconds.
+
+With a preprocessing time of:
+`0.03811841000424465` seconds.
+
+
+## Conclusion
+I have kept everything well abstracted and modular so that I may plug this into other modules and scale it out.
+
+I feel like the algorithm and helper functions, menu system are built very well and are easy to understand and extend.
+
+I have listed all efficiencies, timings, memory usage, code updates and insights into my thought process.
 
 ## References
 [1]: https://gist.github.com/ianmcloughlin/cc5340ee080bd135919a

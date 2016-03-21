@@ -28,7 +28,7 @@ else:   # __main__
 
 def load_word_list():
     if __name__ != 'countdown' and __name__ != 'solver.solver': #  local
-        print('__name__: %s' % __name__)
+        # print('__name__: %s' % __name__)
         word_list_file = "../web_scraper/word_list"
     else:
         word_list_file = "web_scraper/word_list"
