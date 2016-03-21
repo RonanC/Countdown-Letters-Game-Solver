@@ -8,15 +8,17 @@ This module times the various anagram solvers.
 import timeit
 if __name__ != 'countdown' and __name__ != 'solver.timing':
     import solver
+    from unix_words import unix_words
 else:
     from solver import solver
+    from unix_words import unix_words
 
 # word_dict = solver.load_word_dict()
 
 
-def time_preproccesing(num_times=1):
+def time_preproccesing(dict_choice, num_times=1):
     # print('__name__: %s' % __name__)
-    setup = """
+    setupOx = """
 if __name__ != 'countdown' and __name__ != 'timeit':
     import solver
 else:
@@ -27,13 +29,31 @@ def run():
     word_dict = solver.create_word_dict(word_list)
     """
 
-    t = timeit.Timer(stmt='run()', setup=setup)
+    setupUn = """
+if __name__ != 'countdown' and __name__ != 'timeit':
+    from unix_words import unix_words
+else:
+    from unix_words import unix_words
+
+def run():
+    word_list = unix_words.load_word_list()
+    word_dict = unix_words.create_word_dict(word_list)
+    print('done')
+    """
+
+    if dict_choice == 2:
+        t = timeit.Timer(stmt='run()', setup=setupUn)
+        print('yes indeed unix')
+    else:
+        t = timeit.Timer(stmt='run()', setup=setupOx)
+        print('oxford please')
+
     time = t.timeit(num_times)
     print('loaded wordlist and created dictionary %s time(s)' % num_times)
     print('took %s seconds' % time)
 
 
-def time_solver():
+def time_solver(dict_choice):
     show_output = 0
     print('With or without print output?')
     print('1/ent:\tWithout Print')
@@ -80,7 +100,10 @@ def run(show_output):
     # Globals are generally not recommended
     # as they can give strange behavior
     global word_dict
-    word_dict = solver.load_word_dict()
+    if dict_choice == 2:
+        word_dict = unix_words.load_word_dict()
+    else:
+        word_dict = solver.load_word_dict()
 
     stmt = 'run(%s)' % (show_output)
     t = timeit.Timer(stmt=stmt, setup=setup, globals=globals())

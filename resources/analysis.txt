@@ -56,3 +56,30 @@ N/A
 2.984034207998775
 2.959833992001222
 3.0004114049988857
+
+
+## Unix Dictionary Addition
+## Finding anagrams
+The unix dictionary has faster lookup times because we find the anagram earlier as there are more keys.
+**Ox (Without print) (10,000):**
+2.5338323429969023
+2.5413470110070193
+2.5544159050041344
+
+**Un (Without print) (10,000):**
+2.5180373690018314
+2.525958079000702
+2.531505778002611
+
+## Preprocessing
+As expected the much larger dictionary is `2.78` times slower.
+We shouldn't really ever need to be using a dictionary larger then this.
+**Ox Prep:**
+0.02311180099786725
+0.02326396799617214
+0.022261250000155997
+
+**Un Prep:**
+0.6351434009993682
+0.6389991700052633
+0.647304867998173

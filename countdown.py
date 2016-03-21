@@ -94,32 +94,63 @@ def save_dict():
 
 
 # solver:
-def run_solver():
-    print('Running solver....')
-    print('Running solver with nine letter word (jumbled)....')
+def what_dict():
+    print('\nWhat dictionary?')
+    print('1:\tOxford Learners (10938 words)')
+    print('2:\tUnix (235886 words)')
+    print('0:\tCancel')
 
-    setup= """
+    str_choice = input('> ')
+    if str_choice.isdigit():
+        choice = int(str_choice)
+        if choice == 1:
+            print('Oxford selected.')
+        elif choice == 2:
+            print('Unix selected.')
+        else:
+            print('Invalid, defaulting to Oxford')
+            choice = 1
+    else:
+        print('Invalid, defaulting to Oxford')
+        choice = 1
+
+    return choice
+
+
+def run_solver():
+    dict_choice = what_dict()
+
+    setup = """
 if __name__ != 'countdown' and __name__ != 'timeit':
     import solver, letter_gen
+    from unix_words import unix_words
 else:
     from solver import solver, letter_gen
+    from unix_words import unix_words
 
-def run():
+def run(dict_num):
     letters = letter_gen.letter_gen()
     print("Letters:\t%s" % (letters))
-    solver.find_anag(solver.load_word_dict(), letters, 1)
+
+    if dict_num == 2:
+        word_dict = unix_words.load_word_dict()
+    else:
+        word_dict = solver.load_word_dict()
+    solver.find_anag(word_dict, letters, 1)
     """
 
-    seconds = timeit.timeit(stmt='run()', setup=setup, number=1)
+    seconds = timeit.timeit(stmt='run(%s)' % dict_choice, setup=setup, number=1)
     print('Took %s seconds.' % (seconds))
 
 
 def time_solver():
-    timing.time_solver()
+    dict_choice = what_dict()
+    timing.time_solver(dict_choice)
 
 
 def time_preproc():
-    timing.time_preproccesing()
+    dict_choice = what_dict()
+    timing.time_preproccesing(dict_choice)
 
 
 # nines:

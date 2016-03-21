@@ -64,6 +64,10 @@ I updated this document constantly during my journey through this project.
 I added anything of interest or that stood out, be it big efficiency spikes or drawbacks that I came accross.  
 
 ## Words list
+The Second Edition of the 20-volume Oxford English Dictionary contains full entries for 171,476 words in current use [18][18].
+
+My wordlist contains all the worthy words in the oxford learners dictionary lists, this equates to 10938 words.
+
 My words list is in the file [wordslist.txt][12] in this repoistory/gist.  
 I got my words list from the [Oxford Learner's Dictionaries][13] website.  
 In order to efficiently retrieve all the words from all the word lists on the website I create a web scraper which you can run from the menu in the main program.
@@ -79,6 +83,14 @@ The words are then saved to a text and a pickle file, to be later utilized by th
 It takes approximately 2 to 3 minutes to download, analyse, clean, sort and pickle/txt the data.
 
 Altough the saving of the end result (word list) is almost instantaneous.
+
+### Unix Word List
+I also tested it with the `/usr/share/dict/web2` words list (available on all unix systems), which equates to 235886 words.
+For future reference I will refer to this word list as the `Unix Word List`, otherwise I am referring to the custom Oxford one I generated.
+
+I created a `unix_words` module to load, save and generate the unix word lists and dictionaries.
+
+After evalution for one worded words without hypens and also bunched together the anagram words into one key/value pair I ended up with `450210` keys in the dictionary.
 
 ## Architecture/Structure
 The main point of access for my program is `countdown.py` which is in the main folder.  
@@ -399,14 +411,13 @@ We can see a large decrease in CPU when the print statement is turned off.
 ![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/resources/v1-cpu-with-print-10000.png "v1-cpu-with-print-10000")
 
 **without print**  
-
 ![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/resources/v1-cpu-without-print-10000.png "v1-cpu-without-print-10000")
 
 ####Memory
 We can see a decrease of 0.02 GB (20 megabytes) when the print statement is off.  
 **with print**  
 ![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/resources/v1-mem-with-print-10000.png "v1-mem-with-print-10000")
-  
+
 **without print**  
 ![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/resources/v1-mem-without-print-10000.png "v1-mem-without-print-10000")
 
@@ -430,6 +441,39 @@ My script finds the answers in:
 With a preprocessing time of:
 `0.03811841000424465` seconds.
 
+## Unix timings
+### Unix Word List
+The average time for finding an anagram with the Unix Word List was `0.2879146120030782` seconds.
+This is times 23 times slower then the short `Oxford Learners Word List` with an average time of `0.012141890998464078` seconds.
+This is slower because the dictionary has to be read in also.
+When running the query 10'000 times the unix dictionary is actually .008% quicker, or 0.02 seconds quicker
+
+The preprocessing time for the Unix Word List, which includes reading in the words and generating a dictionary took `0.6351434009993682` seconds which is 2.78 times slower then the Oxford dictionary.
+
+## Finding anagrams
+The unix dictionary has faster lookup times because we find the anagram earlier as there are more keys.
+**Ox (Without print) (10,000):**
+2.5338323429969023
+2.5413470110070193
+2.5544159050041344
+
+**Un (Without print) (10,000):**
+2.5180373690018314
+2.525958079000702
+2.531505778002611
+
+## Preprocessing
+As expected the much larger dictionary is `2.78` times slower.
+We shouldn't really ever need to be using a dictionary larger then this.
+**Ox Prep:**
+0.02311180099786725
+0.02326396799617214
+0.022261250000155997
+
+**Un Prep:**
+0.6351434009993682
+0.6389991700052633
+0.647304867998173
 
 ## Conclusion
 I have kept everything well abstracted and modular so that I may plug this into other modules and scale it out.
@@ -437,6 +481,8 @@ I have kept everything well abstracted and modular so that I may plug this into 
 I feel like the algorithm and helper functions, menu system are built very well and are easy to understand and extend.
 
 I have listed all efficiencies, timings, memory usage, code updates and insights into my thought process.
+
+I initially wanted to create a web application in Flask, and a book parser to create a dictionary. I left these out.
 
 ## References
 [1]: https://gist.github.com/ianmcloughlin/cc5340ee080bd135919a
@@ -489,3 +535,6 @@ I have listed all efficiencies, timings, memory usage, code updates and insights
 
 [17]: https://github.com/RonanC/Countdown-Letters-Game-Solver/tree/master/solver
 [[17]]: solver directory
+
+[18]: http://www.oxforddictionaries.com/words/how-many-words-are-there-in-the-english-language
+[[18]]: oxford word list information

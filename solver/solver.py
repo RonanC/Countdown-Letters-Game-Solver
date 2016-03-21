@@ -27,6 +27,9 @@ else:   # __main__
 
 
 def load_word_list():
+    """
+    Loads the word list in.
+    """
     if __name__ != 'countdown' and __name__ != 'solver.solver': #  local
         # print('__name__: %s' % __name__)
         word_list_file = "../web_scraper/word_list"
@@ -41,6 +44,9 @@ def load_word_list():
 
 
 def save_word_dict(word_dict, show_output=1, serialize=2):
+    """
+    Saves the dictionary in pickle or text format.
+    """
     if __name__ != 'countdown' and __name__ != 'solver.solver':
         filename = 'word_dict'
     else:
@@ -73,6 +79,9 @@ def save_word_dict(word_dict, show_output=1, serialize=2):
 
 
 def load_word_dict():
+    """
+    Loads the word dictionary.
+    """
     if __name__ != 'countdown' and __name__ != 'solver.solver':
         word_dict_file = "word_dict"
     else:
@@ -86,6 +95,9 @@ def load_word_dict():
 
 
 def create_word_dict(word_list):
+    """
+    Creates a word dictionary.
+    """
     word_dict = defaultdict(list)
 
     for word in word_list:
@@ -96,6 +108,9 @@ def create_word_dict(word_list):
 
 
 def find_anag(word_dict, letters, show_output=1):
+    """
+    Finds the anagram.
+    """
     word_permu = permut(letters)
     # print(word_permu)
 
@@ -113,6 +128,10 @@ def find_anag(word_dict, letters, show_output=1):
 
 
 def solver(letters, show_output=1):
+    """
+    Loads the dicitonary, generates the random letters and finds the anagrams.
+    """
+
     # Create a new word dict
     # word_dict = create_word_dict(load_word_list())
     # Save word dict
@@ -134,6 +153,9 @@ def solver(letters, show_output=1):
 
 
 def main():
+    """
+    Test function.
+    """
     letters = letter_gen()
     solver(letters)
 
