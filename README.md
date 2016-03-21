@@ -116,6 +116,9 @@ While testing I found that there were a few duplicates when using the list.
 Using a set prevents this with it's in built, highly efficient membership testing.  
 Due to the fact the the word is sorted we only need to check a smaller sub set of the word, either clipping the front letter or the rear letter.
 
+For a nine letter word it generates 511 permutations of which 44 are unique (depending on repeating letters).
+There are only 44 permutations because it only checks sorted permutations (which deals with clipping letters off rather then shuffling letters).
+
 If I used a list and tweaked this algorithm it would be more efficient.  
 After much time I could not figure it out.
 
@@ -186,9 +189,15 @@ import nothing
 ```
 That didn't work too well, so I changed it.
 
-## Step Through
-*Step by step the logic of the solver*  
-*Keep it succinct*
+## Step/Flow through of actions
+- generate word list from the oxford website (using the web scraper)
+- turn word list into dictionary, with the sorted word as the key, and the anagrams as values
+- generate a random 9 letters, following countdown rules
+- generate all permutations of the sorted word (44 permutations)
+- pass each permutation into the dictionary, starting with the longest, until we find a matching value
+- Once the value is found we print all the anagrams for that key and print the time
+
+There are many helper functions in the menu system to show off various aspects of the projects modules.
 
 ## Preprocessing
 My program does a lot of preprocessing.  
@@ -385,31 +394,31 @@ We can see an increase of 8% here.
 ## Memory
 ###Version 1: (loading dictionary each time) 10'000 iterations
 ####CPU
+We can see a large decrease in CPU when the print statement is turned off.
 **with print**
-
+![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/tree/master/resources/v1-cpu-with-print-10000.png "v1-cpu-with-print-10000")
 
 **without print**
-
+![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/tree/master/resources/v1-cpu-without-print-10000.png "v1-cpu-without-print-10000")
 
 ####Memory
+We can see a decrease of 0.02 GB (20 megabytes) when the print statement is off.
 **with print**
-
+![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/tree/master/resources/v1-mem-with-print-10000.png "v1-mem-with-print-10000")
 
 **without print**
+![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/tree/master/resources/v1-mem-without-print-10000.png "v1-mem-without-print-10000")
 
-###Version 2: (dictionary loaded once) 10'000 iterations
-####CPU
-**with print**
+###Version 2: (dictionary loaded once) 100'000 iterations
+I ran the new version watching the cpu and memory usage in the OSX Activity Monitor and via the `top` command line tool.  
+The memory of the process stayed at 22M for the entire time.  
+The CPU went to 80% and stayed there.
+Here is a screen shot in `top` of before and after running the 100'000 iterations:
+**stand by**
+![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/tree/master/resources/v2-standby-top.png "v2-standby-top")
 
-
-**without print**
-
-
-####Memory
-**with print**
-
-
-**without print**
+**running**
+![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/tree/master/resources/v2-running-top.png "v2-running-top")
 
 ## Results
 The countdown games give it's players 30 seconds to find the best anagram.

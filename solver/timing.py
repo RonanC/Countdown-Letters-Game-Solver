@@ -54,7 +54,9 @@ def time_solver():
 
     num_def = 1000
     num_min = 1
-    num_max = 10000
+    # 10 billion
+    # 10'000'000'000
+    num_max = 10000000000
     print('Run solver how many times?')
     print('Choose a number between %s and %s' % (num_min, num_max))
     print('Press enter to run default (%s)' % num_def)
