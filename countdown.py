@@ -17,7 +17,7 @@ See other module headers for more information.
 
 from web_scraper.web_scraper import web_scraper
 from solver import timing, solver, letter_gen, nines
-from heap import heap
+from heap_hash import heap, hashing
 import sys
 import timeit
 
@@ -48,9 +48,8 @@ def main_menu():
         print('7:\tGen & Save Nine Letter Words')
         print('8:\tGet nine letter word')
         print('9:\tRun solver with nine letter word')
-        print('Other Algorithms:')
-        print('a:\tHeaps Algorithm')
-        print('b:\tHashing Algorithm')
+        print('Other:')
+        print('a:\tHeap Hash Algorithm')
         print('0:\tQuit\n')
 
         str_choice = input(prompt)
@@ -61,9 +60,7 @@ def main_menu():
             else:
                 print('Choices between 0 and %s.' % (len(options) - 1))
         elif str_choice.strip().lower() == 'a':
-            run_heap()
-        elif str_choice.strip().lower() == 'b':
-            print('b')
+            time_heap_hash()
         elif str_choice == '':
             # enter key was pressed
             options[4]()
@@ -193,17 +190,30 @@ def run():
 
 
 # other algorithms:
-def run_heap():
+def time_heap_hash():
+    setup = """
+def run():
+    run_heap_hash()
+    """
+
+    seconds = timeit.timeit(stmt='run()', setup=setup, number=1, globals=globals())
+    print('Took %s seconds.' % (seconds))
+
+
+def run_heap_hash():
     word = nines.word_picker()
-    print('Chosen word: %s\n' % word)
+    # print('Chosen word: %s\n' % word)
+
+    nines_list = nines.load_nines()
+    hash_nines_dict = hashing.hash_word_list(nines_list)
 
     perms = heap.heap(word)
-    print('perms: %s' % len(perms))
-    nines_list = nines.load_nines()
-    print('nines_list: %s' % len(nines_list))
+    hash_perms_dict = hashing.hash_word_list(perms)
 
-    match = heap.check_word(nines_list, perms)
-    print('\nmatch: %s' % match)
+    print('Checking %s words in the dictionary against %s permutations of the chosen word: %s' % (len(hash_nines_dict), len(hash_perms_dict), word))
+    heap.check_word(hash_nines_dict, hash_perms_dict)
+    # print(match)
+    # print('\nMatch: %s' % match)
 
 
 # misc:

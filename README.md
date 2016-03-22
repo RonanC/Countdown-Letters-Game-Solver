@@ -224,41 +224,10 @@ For more information on the word list check out the `Words list` heading above.
 ## Solver Algorithms (versions)
 I decided to set my self the task of creating three different solver algorithms.  Since this project is all about the theory of algorithms I thought it would be worth while to cover not just the depth of algorithms but breadth as well. I feel like this is advantageous due to the fact that when you are faced with the same algorithm for days on end you can develop tunnel vision. By switching to another style of algorithm and coming up with new insights, by the time I finish up and revisit the previous algorithm there will more then likely be a Eureka moment.
 
-### Sorted words in dictionary (final/main algorithm)
-This version of the solver took the biggest preprocessing time, as the whole words list needed be sorted, turned into a dictionary and pickled.
-Once complete we can reap the rewards of a much lower permutation check on any given word.
+I ended up merging my hashing and heap algorithm into one (heap_hash) algorithm.  
+My sorted word dictionary algorithm was the second, it performed outstandingly.
 
-I like how simple and elegant this solution is.  
-In order to have a list as the value of the dictionary I used the Python Collections - Default Dictionary. I found this great [Stack Overflow answer](http://stackoverflow.com/a/26367880/2052295).  
-In added a list as the value type very simply:  
-```py
-word_dict = defaultdict(list)
-```
-
-One of the great things about this dictionary is that when you append the first word onto the list it automatically calls the `default_factory` which returns an empty list:  
-```py
-word_dict[srt_word].append(word)
-```
-
-As stated previously there are a few duplicates created with the `permut.py` function, this is why I used a set. 
-
-I counted the number of permutations against the number of permutations generated.
-For a nine letter word I am generating 511 permutations, so there are duplicates. Only approximately 44 of these are used (including one character words). If a letter is duplicated then it affects the outcome of useful permutations.
-
-511 permutations is not a lot due to the fact that my word is sorted, still I feel like there is a better solution then 511 attempts, also this does not scale into other (non sorted) algorithms.
-
-**Maximum**
-If all the letters are different then we are left with a maximum of 44 permutations.
-
-**Minimum:**
-If all the vowels are the same and the consonants also the same then we have:
-27 permutations if 3 vowels and 6 consonants.
-29 permutations if 4 consonants 5 vowels.
-
-### Custom hashing
-*TODO*
-
-### Heaps algorithm (customized)
+### Heap Hash Algorithm
 #### References:
 Heaps Paper:  
 http://comjnl.oxfordjournals.org/content/6/3/293.full.pdf
@@ -269,6 +238,10 @@ https://en.wikipedia.org/wiki/Heap%27s_algorithm
 Stack overflow (my question):  
 http://stackoverflow.com/questions/35869763/implementation-of-heaps-algorithm-in-scheme-permutation-generation
 
+#### Introduction
+I used heaps algorithm in conjunction with the hashlib library in order to find the matching word.
+
+#### Walk through
 I created a Heap style algorithm that saves every permutation into a list.
 The first version was naive; it attempted to check every permutation against every nine letter word.
 I left the program running until:
@@ -319,8 +292,92 @@ def gen_perms(n, A):
                 # break
 ```
 
+#### Heap Hash Version 2
+I cleaned up the swapping.
+```py
+A[i], A[n-1] = A[n-1], A[i]
+```
+I was generating too many permutations before, now a five letter word generates 120 permutations.  
+I changed `for i in range(0, n):` to `for i in range(n-1):`  
 
-### conclusion
+I needed to changed the list to a string:  
+`perms.append(''.join(A))`  
+
+Here is the new version:  
+```py
+    if n == 1:
+        perms.append(''.join(A))
+    else:
+        for i in range(n-1):
+            gen_perms(n-1, A)
+            if (n % 2) == 0:
+                A[i], A[n-1] = A[n-1], A[i]
+            else:
+                A[0], A[n-1] = A[n-1], A[0]
+        gen_perms(n-1, A)
+```
+
+Some permutations are the same, for the word `hello` we generate 120 permutations but only 60 are unique.
+When we hash the word we only have 60 hashes.
+
+#### Checking the word
+Since there a lot more nine letter word permutations then there are nine letter words in the dictionary, we shall check each dictionary word hash against our given jumbled word hash.
+
+**updated word checker**:  
+This is using a dictionary with hashes as the key.
+```py
+    for word_hash_num, word_value in word_list.items():
+        word_count += 1
+        perm_count = 0
+        for perm_hash_num, perm_value in perm_list.items():
+            total_count += 1
+            perm_count += 1
+            # print('perm: %s    word: %s    t_count:\t%s    p_count: %s    w_count: %s' % (perm_list[perm_hash_num], word_list[word_hash_num], total_count, perm_count, word_count))
+            if perm_list[perm_hash_num] == word_list[word_hash_num]:
+                print('Found a match:\t%s\tAfter checking %s words.' % (word_list[word_hash_num], t_count))
+                return (word_list[word_hash_num], total_count)
+```
+
+#### Timings
+It takes on average `63.51399190000666` seconds to find the correct permutation.
+
+#### Conclusion
+It is an interesting approach.  
+I could have investigated generators and the yield function in order to keep the items out of memory, but I felt like the sorted word dictionary algorithm would prevail by a lot so I went ahead with that. I didn't feel a need to push this algorithm any farther.
+
+### Sorted words in dictionary (final/main algorithm)
+This version of the solver took the biggest preprocessing time, as the whole words list needed be sorted, turned into a dictionary and pickled.
+Once complete we can reap the rewards of a much lower permutation check on any given word.
+
+I like how simple and elegant this solution is.  
+In order to have a list as the value of the dictionary I used the Python Collections - Default Dictionary. I found this great [Stack Overflow answer](http://stackoverflow.com/a/26367880/2052295).  
+In added a list as the value type very simply:  
+```py
+word_dict = defaultdict(list)
+```
+
+One of the great things about this dictionary is that when you append the first word onto the list it automatically calls the `default_factory` which returns an empty list:  
+```py
+word_dict[srt_word].append(word)
+```
+
+As stated previously there are a few duplicates created with the `permut.py` function, this is why I used a set. 
+
+I counted the number of permutations against the number of permutations generated.
+For a nine letter word I am generating 511 permutations, so there are duplicates. Only approximately 44 of these are used (including one character words). If a letter is duplicated then it affects the outcome of useful permutations.
+
+511 permutations is not a lot due to the fact that my word is sorted, still I feel like there is a better solution then 511 attempts, also this does not scale into other (non sorted) algorithms.
+
+**Maximum**
+If all the letters are different then we are left with a maximum of 44 permutations.
+
+**Minimum:**
+If all the vowels are the same and the consonants also the same then we have:
+27 permutations if 3 vowels and 6 consonants.
+29 permutations if 4 consonants 5 vowels.
+
+
+#### conclusion
 The sorted words in a dictionary ended up being the fasted, due mainly in part to the preprocessing and small dictionary size, however if you have a very large dictionary (that changes over time) and need to only calculate anagrams for a small number of jumbled words then the **custom hashing** would be better suited, but this is a very limited scenario.
 
 If the use case of this algorithm is to be a web/mobile app where users input letters and get anagrams then the sorted dictionary processing algorithm is better as we will only need to do the preprocessing once and will be serving many requests (among all the users).
