@@ -13,25 +13,30 @@ from random import shuffle
 
 # n = integer
 # A = array (list)
-perms = []
 
 
-def gen_perms(n, A):
-    """
-    Recursively generates permutations.
-    Implementation of Heaps algorithm.
-    """
-    if n == 1:
-        perms.append(''.join(A))
-        # print(A)
-    else:
-        for i in range(n-1):
-            gen_perms(n-1, A)
-            if (n % 2) == 0:
-                A[i], A[n-1] = A[n-1], A[i]
-            else:
-                A[0], A[n-1] = A[n-1], A[0]
-        gen_perms(n-1, A)
+def gen_perms_heap(n, A):
+    perms = []  # heap
+
+    def gen_perm(n, A):
+        """
+        Recursively generates permutations.
+        Implementation of Heaps algorithm.
+        """
+        if n == 1:
+            perms.append(''.join(A))
+            # print(A)
+        else:
+            for i in range(n-1):
+                gen_perm(n-1, A)
+                if (n % 2) == 0:
+                    A[i], A[n-1] = A[n-1], A[i]
+                else:
+                    A[0], A[n-1] = A[n-1], A[0]
+            gen_perm(n-1, A)
+
+    gen_perm(n, A)
+    return perms
 
 
 def gen_perms_yield(A):
@@ -50,15 +55,13 @@ def gen_perms_yield(A):
                 # returns the letter plus the returned word
                 yield [A[x]] + y
 
+
 def heap(word):
     """
     Runs the module.
     """
-    gen_perms(len(word), list(word))
-    words = []
-    # deep copy (rather then pointer)
-    words[:] = perms[:]
-    del perms[:]
+    # words = gen_perms_heap(len(word), list(word))
+    words = list(gen_perms_yield(list(word)))
     return words
 
 

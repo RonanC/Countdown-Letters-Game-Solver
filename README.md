@@ -137,6 +137,86 @@ There are only 44 permutations because it only checks sorted permutations (which
 If I used a list and tweaked this algorithm it would be more efficient.  
 After much time I could not figure it out.
 
+### Permutation generator with Yield
+I wanted to test out the use of `Yield` and `Generators`.  
+Generators are similar to functions, the difference is in the use of Yield rather then return.  
+Yield works similar to return, the difference is that the next time the generator is called, it continues from where the last return stopped.  
+This makes it great for algorithms that recursivily call themselves.
+
+I learned about Generators, Yield and List Comprehension [here](http://www.python-course.eu/generators.php).  
+
+Here is my implementation.
+
+```py
+def gen_perms_yield(A):
+    """
+    Generating permutations with yield.
+    Yield allows us to continue after the return.
+    """
+    n = len(A)
+    if n == 0:
+        yield []
+    else:
+        # removes x from the next call.
+        for x in range(len(A)):
+            # returns a word (list comprehension)
+            for y in gen_perms_yield(A[:x] + A[x+1:]):
+                # returns the letter plus the returned word
+                yield [A[x]] + y
+```
+
+This was substantially faster then the heap permutation function I created.
+### Timings of Heap vs Yield
+#### Heap
+```
+Checking 1237 words in the dictionary against 90720 permutations of the chosen word: eeyscsitn
+Found a match:  necessity   After checking 70231418 words.
+Took 31.249738824000815 seconds.
+
+Checking 1237 words in the dictionary against 181440 permutations of the chosen word: elpifrmai
+Found a match:  amplifier   After checking 141913693 words.
+Took 68.59837270299977 seconds.
+
+Checking 1237 words in the dictionary against 181440 permutations of the chosen word: ctineorid
+Found a match:  direction   After checking 220501940 words.
+Took 104.01772735299892 seconds.
+
+Checking 1237 words in the dictionary against 90720 permutations of the chosen word: dartutase
+Found a match:  saturated   After checking 99669354 words.
+Took 47.1991058090025 seconds.
+```
+
+Some permutations are dentical, but when we hash it they are removed. Hence the difference in permutation count above. This severely changes the time.
+
+#### Yield
+```
+Checking 1237 words in the dictionary against 90720 permutations of the chosen word: urerniftu
+Found a match:  furniture   After checking 23572929 words.
+Took 12.394360403999599 seconds.
+
+Checking 1237 words in the dictionary against 90720 permutations of the chosen word: ihlabtabe
+Found a match:  habitable   After checking 50433283 words.
+Took 23.649387301000388 seconds.
+
+Checking 1237 words in the dictionary against 45360 permutations of the chosen word: ehttrrsec
+Found a match:  stretcher   After checking 55648116 words.
+Took 23.77674162800031 seconds.
+
+Checking 1237 words in the dictionary against 181440 permutations of the chosen word: mrntaouap
+Found a match:  paramount   After checking 106562439 words.
+Took 52.28978767599983 seconds.
+
+Checking 1237 words in the dictionary against 90720 permutations of the chosen word: torropcae
+Found a match:  corporate   After checking 50236043 words.
+Took 25.854087329997128 seconds.
+
+```
+
+This is a significant performance boost.
+However as we scale up the nine letter word list we increasing the amount of searches dramatically.
+We can also see it depends on the chosen words, some take longer to find.
+
+
 ## Python script
 ### Main module (countdown.py)
 My script is in the files [countdown.py][14] in this repository and it works as follows.  
