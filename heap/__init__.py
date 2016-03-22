@@ -1,6 +1,6 @@
 """
-countdown.unix_words
-~~~~~~~~~~~~~~~~~~~~
+countdown.heap
+~~~~~~~~~~~~~~
 """
 
 # This file lets python know sub-directories are packages

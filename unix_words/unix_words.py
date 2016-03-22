@@ -1,6 +1,6 @@
 """
 unix_words.unix_words
-~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 This package is for loading and saving the large unix word list.
 There are 235886 words in this text file.

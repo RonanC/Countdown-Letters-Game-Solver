@@ -17,6 +17,7 @@ See other module headers for more information.
 
 from web_scraper.web_scraper import web_scraper
 from solver import timing, solver, letter_gen, nines
+from heap import heap
 import sys
 import timeit
 
@@ -47,6 +48,9 @@ def main_menu():
         print('7:\tGen & Save Nine Letter Words')
         print('8:\tGet nine letter word')
         print('9:\tRun solver with nine letter word')
+        print('Other Algorithms:')
+        print('a:\tHeaps Algorithm')
+        print('b:\tHashing Algorithm')
         print('0:\tQuit\n')
 
         str_choice = input(prompt)
@@ -56,6 +60,10 @@ def main_menu():
                 options[int(choice)]()
             else:
                 print('Choices between 0 and %s.' % (len(options) - 1))
+        elif str_choice.strip().lower() == 'a':
+            run_heap()
+        elif str_choice.strip().lower() == 'b':
+            print('b')
         elif str_choice == '':
             # enter key was pressed
             options[4]()
@@ -168,7 +176,7 @@ def run_solver_nine():
     # letters = nines.word_picker()
     # print("Letters:\t%s" % letters)
 
-    setup= """
+    setup = """
 if __name__ != 'countdown' and __name__ != 'timeit':
     import solver, nines
 else:
@@ -182,6 +190,20 @@ def run():
 
     seconds = timeit.timeit(stmt='run()', setup=setup, number=1)
     print('Took %s seconds.' % (seconds))
+
+
+# other algorithms:
+def run_heap():
+    word = nines.word_picker()
+    print('Chosen word: %s\n' % word)
+
+    perms = heap.heap(word)
+    print('perms: %s' % len(perms))
+    nines_list = nines.load_nines()
+    print('nines_list: %s' % len(nines_list))
+
+    match = heap.check_word(nines_list, perms)
+    print('\nmatch: %s' % match)
 
 
 # misc:

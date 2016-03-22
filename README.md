@@ -259,7 +259,66 @@ If all the vowels are the same and the consonants also the same then we have:
 *TODO*
 
 ### Heaps algorithm (customized)
-*TODO*
+#### References:
+Heaps Paper:  
+http://comjnl.oxfordjournals.org/content/6/3/293.full.pdf
+
+Wiki Ref:  
+https://en.wikipedia.org/wiki/Heap%27s_algorithm
+
+Stack overflow (my question):  
+http://stackoverflow.com/questions/35869763/implementation-of-heaps-algorithm-in-scheme-permutation-generation
+
+I created a Heap style algorithm that saves every permutation into a list.
+The first version was naive; it attempted to check every permutation against every nine letter word.
+I left the program running until:
+`perm: gudxntzuu    word: crossword    t_count: 3389380    p_count: 2741    w_count: 271`
+t: total
+p: permutation
+w: word
+
+A nine letter word generates `1814400` permutations.
+I have `1237` nine letter words.
+That is  ```1814400 ^ 1237```:
+`1,814,400` possibilities.
+
+**Heap Algo Implementation:
+```py
+perms = []
+
+def gen_perms(n, A):
+    if n == 1:
+        perms.append(A)
+    else:
+        for i in range(0, n):
+            gen_perms(n-1, A)
+            if (n % 2) == 0:
+                temp = A[i]
+                A[i] = A[n-1]
+                A[n-1] = temp
+            else:
+                temp = A[0]
+                A[0] = A[n-1]
+                A[n-1] = temp
+        gen_perms(n-1, A)
+```
+
+**Word Checker:**
+```py
+    for perm in range(0, len(perm_list)):
+        perm_count += 1
+        total_count += word_count
+        word_count = 0
+        perm_str = ''.join(perm_list[perm])
+        for word in range(0, len(word_list)):
+            word_count += 1
+            print('perm: %s    word: %s    t_count:\t%s    p_count: %s    w_count: %s' % (perm_str, word_list[word], total_count, perm_count, word_count))
+            if perm_str == word_list[word]:
+                # print('Found a match:\t%s' % word)
+                return word
+                # break
+```
+
 
 ### conclusion
 The sorted words in a dictionary ended up being the fasted, due mainly in part to the preprocessing and small dictionary size, however if you have a very large dictionary (that changes over time) and need to only calculate anagrams for a small number of jumbled words then the **custom hashing** would be better suited, but this is a very limited scenario.

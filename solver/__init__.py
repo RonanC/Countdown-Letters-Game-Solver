@@ -1,5 +1,6 @@
 """
-Anagram Solver
+countdown.solver
+~~~~~~~~~~~~~~~~
 """
 
 # This file lets python know sub-directories are packages

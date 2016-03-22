@@ -17,6 +17,11 @@ def save_nines(words, filename, serialize=2):
     """
     Saves the nine lettter word list to a text and pickle file.
     """
+    if __name__ != 'countdown' and __name__ != 'solver.nines':
+        filename = filename
+    else:
+        filename = 'solver/' + filename
+
     def pkl_words():
         pkl_filename = filename + '.pkl'
         output = open(pkl_filename, 'wb')
@@ -45,7 +50,7 @@ def load_nines():
     """
     Loads the nine letter word file from pickle format.
     """
-    if __name__ != 'countdown' and __name__ != 'solver.solver':
+    if __name__ != 'countdown' and __name__ != 'solver.nines':
         # print('__name__: %s' % __name__)
         nines_list_file = "nines_list"
     else:
