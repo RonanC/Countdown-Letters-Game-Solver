@@ -1,5 +1,5 @@
 """
-countdown.nines
+solver.nines
 ~~~~~~~~~~~~
 
 This module creates the nines file and generates the random 9 letter word

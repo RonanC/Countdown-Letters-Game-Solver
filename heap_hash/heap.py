@@ -19,6 +19,7 @@ perms = []
 def gen_perms(n, A):
     """
     Recursively generates permutations.
+    Implementation of Heaps algorithm.
     """
     if n == 1:
         perms.append(''.join(A))
@@ -32,6 +33,22 @@ def gen_perms(n, A):
                 A[0], A[n-1] = A[n-1], A[0]
         gen_perms(n-1, A)
 
+
+def gen_perms_yield(A):
+    """
+    Generating permutations with yield.
+    Yield allows us to continue after the return.
+    """
+    n = len(A)
+    if n == 0:
+        yield []
+    else:
+        # removes x from the next call.
+        for x in range(len(A)):
+            # returns a word (list comprehension)
+            for y in gen_perms_yield(A[:x] + A[x+1:]):
+                # returns the letter plus the returned word
+                yield [A[x]] + y
 
 def heap(word):
     """
@@ -53,8 +70,6 @@ def check_word(word_list, perm_list):
     Both lists are hashes.
     """
 
-    # print('word_list: %s' % len(word_list))
-    # print('perm_list: %s' % len(perm_list))
     total_count = 0
     perm_count = 0
     word_count = 0
@@ -81,15 +96,23 @@ def main():
     word_lst = list(word)
     shuffle(word_lst)
 
-    gen_perms(len(word_lst), list(word_lst))
+    # gen_perms(len(word_lst), list(word_lst))
 
-    words = []
-    words[:] = perms[:]
-    del perms[:]
+    # words = []
+    # words[:] = perms[:]
+    # del perms[:]
 
-    print(words)
-    print()
-    print(len(words))
+    # print(words)
+    # print()
+    # print(len(words))
+    
+    # using yield:
+    # list comprehension with our generator.
+    # for g in gen_perms_yield(list(word_lst)): print(''.join(g))
+    
+    perms = [g for g in gen_perms_yield(list(word_lst))]
+    print(len(perms))
+
 
 
 if __name__ == '__main__':

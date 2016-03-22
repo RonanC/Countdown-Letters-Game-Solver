@@ -135,6 +135,9 @@ def load_word_dict():
 
 
 def main():
+    """
+    Test function.
+    """
     words = load_word_list(1)
     unix_word_dict = create_word_dict(words)
     save_word_dict(unix_word_dict)

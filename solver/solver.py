@@ -1,5 +1,5 @@
 """
-countdown.solver
+solver.solver
 ~~~~~~~~~~~~
 
 This module finds all possible anagrams from a given list of letters.
