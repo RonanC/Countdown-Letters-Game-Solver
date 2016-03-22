@@ -1,6 +1,6 @@
+# Countdown-Letters-Game-Solver
 ### Ronan Connolly
 #### G00274374
-# Countdown-Letters-Game-Solver
 A Python script that solves the Countdown letters game, and a readme explaining how the solver works.
 
 ## Introduction
