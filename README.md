@@ -5,12 +5,14 @@ A Python script that solves the Countdown letters game, and a readme explaining 
 
 ## Introduction
 This project was created as part of my Theory of Algorithms module in college.  
-The basic project brief was to create an algorithm in Python to solve the Countdown Conundrum game where you have a nine letter word consisting of at least three vowels and four consonants.
+The basic project brief was to create an algorithm in Python to solve the Countdown Conundrum game where you have a nine letter word consisting of at least three vowels and four consonants.  
 The goal is to create the most efficient algorithm as possible, keeping track of different approaches, timing each algorithm, checking performance, memory usage and basically doing a lot of analysis.  
 This project gives insight into really digging deep into algorithms and not just trying to create a complete solution but an optimal solution.  
 All findings during analysis and through the progression of this project will be listed in this readme, in the commit history and in the issue tracker.  
 
 Official Project Brief: [Project Brief][1]
+
+Github url: https://github.com/RonanC/Countdown-Letters-Game-Solver
 
 ## Background
 ### General Research
@@ -22,7 +24,7 @@ I also completed their python [screencast][3] which included using an external A
 I watched some countdown episodes and read up on the rules to clarify some things and to get my program as close as possible to the real deal.
 
 Listened to some [python podcasts][4], and read a few chapters from Miguels book on [Flask][5].  
-Once all of this research was done, I went back through all the excercises done in class and modified them (they are located [here][6]).  
+Once all of this research was done, I went back through all the excercises done in class and tried to optimize them, I used these ideas in this project as you will see.  
 To finalise my research I completed the Gambit Problem Sheet in Python, located [here][7].
 
 ### Countdown Research
@@ -47,7 +49,6 @@ The second task was to read [heaps paper][9] on permutations and try to implemen
 This helped me in understanding word permutations at a deeper level in Python.
 
 ### Coding it up
-
 My third task was to get the wordlist, I decided to create a webscraper to do this for me.  
 I used the [BeautifulSoup][10] package alongside the [Requests library][11] in order to download the various Oxford wordlists and parse them.  
 I used this [tutorial][15] as a starting point.
@@ -62,6 +63,8 @@ The cherry on top was to implement my packages into a flask application and host
 
 I updated this document constantly during my journey through this project.  
 I added anything of interest or that stood out, be it big efficiency spikes or drawbacks that I came accross.  
+
+I included an `__init__.py` file in each folder to allow python to know that all sub-directories are packages.
 
 ## Words list
 The Second Edition of the 20-volume Oxford English Dictionary contains full entries for 171,476 words in current use [18][18].
@@ -85,7 +88,7 @@ It takes approximately 2 to 3 minutes to download, analyse, clean, sort and pick
 Altough the saving of the end result (word list) is almost instantaneous.
 
 ### Unix Word List
-I also tested it with the `/usr/share/dict/web2` words list (available on all unix systems), which equates to 235886 words.
+I also tested it with the `/usr/share/dict/web2` words list (available on all unix systems), which equates to 235886 words.  
 For future reference I will refer to this word list as the `Unix Word List`, otherwise I am referring to the custom Oxford one I generated.
 
 I created a `unix_words` module to load, save and generate the unix word lists and dictionaries.
@@ -159,8 +162,7 @@ The solver function stops once it finds the best match, but it can keep going if
 I decided that this was not necessary.
 
 ### Solver.py
-This is where the action happens
-
+This is where the action happens.
 First we get all the permutations as described above:
 
 ```py
@@ -179,7 +181,7 @@ def find_anag(word_dict, letters):
     print('Anagrams:\t%s' % anagrams)
     print('Attempts:\t%s\n' % count)
 ```
-We can view the permutations by uncommenting the commented line.
+We can view the permutations by uncommenting the commented line.  
 Here we are keeping track of how many attempts it took before we found our word.
 
 After running it many times I found it usually take 20 attempts but outliers of 3 and 34 attempts do pop up often. 
@@ -188,18 +190,6 @@ Since we are using the Oxford word lists, we only have approxiately 10'000 words
 
 If there are no anagrams then there will be 43 attempts.
 
-```py
-import random
-print(random.shuffle("My code is cool."))
-```
-
-Previously it looked like this:
-```py
-# Note that the following snippet of code was adapted from
-# the Stack Overflow post available here: http://www.so.com/post/123
-import nothing
-```
-That didn't work too well, so I changed it.
 
 ## Step/Flow through of actions
 - generate word list from the oxford website (using the web scraper)
@@ -242,18 +232,18 @@ http://stackoverflow.com/questions/35869763/implementation-of-heaps-algorithm-in
 I used heaps algorithm in conjunction with the hashlib library in order to find the matching word.
 
 #### Walk through
-I created a Heap style algorithm that saves every permutation into a list.
-The first version was naive; it attempted to check every permutation against every nine letter word.
-I left the program running until:
-`perm: gudxntzuu    word: crossword    t_count: 3389380    p_count: 2741    w_count: 271`
-t: total
-p: permutation
-w: word
+I created a Heap style algorithm that saves every permutation into a list.  
+The first version was naive; it attempted to check every permutation against every nine letter word.  
+I left the program running until:  
+`perm: gudxntzuu    word: crossword    t_count: 3389380    p_count: 2741    w_count: 271`  
+t: total  
+p: permutation  
+w: word   
 
-A nine letter word generates `1814400` permutations.
-I have `1237` nine letter words.
-That is  ```1814400 ^ 1237```:
-`1,814,400` possibilities.
+A nine letter word generates `1814400` permutations.  
+I have `1237` nine letter words.    
+That is  ```1814400 ^ 1237```:  
+`1,814,400` possibilities. 
 
 **Heap Algo Implementation:
 ```py
@@ -317,7 +307,7 @@ Here is the new version:
         gen_perms(n-1, A)
 ```
 
-Some permutations are the same, for the word `hello` we generate 120 permutations but only 60 are unique.
+Some permutations are the same, for the word `hello` we generate 120 permutations but only 60 are unique.  
 When we hash the word we only have 60 hashes.
 
 #### Checking the word
@@ -363,7 +353,7 @@ word_dict[srt_word].append(word)
 
 As stated previously there are a few duplicates created with the `permut.py` function, this is why I used a set. 
 
-I counted the number of permutations against the number of permutations generated.
+I counted the number of permutations against the number of permutations generated.  
 For a nine letter word I am generating 511 permutations, so there are duplicates. Only approximately 44 of these are used (including one character words). If a letter is duplicated then it affects the outcome of useful permutations.
 
 511 permutations is not a lot due to the fact that my word is sorted, still I feel like there is a better solution then 511 attempts, also this does not scale into other (non sorted) algorithms.
@@ -372,8 +362,8 @@ For a nine letter word I am generating 511 permutations, so there are duplicates
 If all the letters are different then we are left with a maximum of 44 permutations.
 
 **Minimum:**
-If all the vowels are the same and the consonants also the same then we have:
-27 permutations if 3 vowels and 6 consonants.
+If all the vowels are the same and the consonants also the same then we have:  
+27 permutations if 3 vowels and 6 consonants.  
 29 permutations if 4 consonants 5 vowels.
 
 
@@ -388,49 +378,49 @@ If the dictionary cannot be saved and we must process all the words for each sin
 
 
 ### Efficiency
-I've talked about the pre-processing and algorithms above.
+I've talked about the pre-processing and algorithms above.  
 I mentioned how many calculations my permutations algorithm takes.
 
 Here I will go through the sorted word dictionary algorithm since it is my champion algorithm.
 
-If the show flag is set to 1, an if statement will show the output of the letters, found anagrams, and number of attempts.
+If the show flag is set to 1, an if statement will show the output of the letters, found anagrams, and number of attempts.  
 When running the algorithm for the defaulted 1000 times this if statement is ran each time.
 
 I removed the if statement and it had made no effect to the performance.
 
 ## Timing
 ### Preproceesing time
-This involves loading in the word dictionary (unpickle/unserialize),
-Sorting each word, finding each permutation of that sorted word (discussed above under the *Sorted words in dictionary* heading),
+This involves loading in the word dictionary (unpickle/unserialize),  
+Sorting each word, finding each permutation of that sorted word (discussed above under the *Sorted words in dictionary* heading),  
 and then finally creating the dictionary by using the sorted word as the key.
 
-This takes `0.02294115200129454` seconds.
+This takes `0.02294115200129454` seconds.  
 You should take into account that the total relevant words in the Oxford Word Lists is 10,938 (which led to 10,535 keys in the dictionary).
 
 ####V1 - Sorted Word Dictionary
 This was my original analysis where I printed 1000 and 10,000 times.
 I tested it with output on and off.
 
-**With print (1,000):**
+**With print (1,000):**  
 ```
 11.675327009000284
 11.296415551000337
 11.303801694000413
 ```
 
-**Without print (1,000):**
+**Without print (1,000):**  
 ```
 9.122691438999937
 9.29408249900007
 9.137007385999823
 ```
 
-**With print (10,000):**
-```
+**With print (10,000):**  
+``` 
 111.1710740339995
 ```
 
-**Without print (10,000):**
+**Without print (10,000):**  
 ```
 95.93674115300018
 ```
@@ -442,7 +432,7 @@ I the realized that I was loading the dictionary in each time.
 This is part of the preprocessing.
 I was shocked at the improvements.
 
-**With print (1,000):**
+**With print (1,000):**  
 ```
 0.5546017859996937
 0.5734935639993637
@@ -451,7 +441,7 @@ I was shocked at the improvements.
 
 22 times faster (11 / 0.5)
 
-**Without print (1,000):**
+**Without print (1,000):**  
 ```
 0.2962503909984662
 0.3058995000028517
@@ -461,7 +451,7 @@ I was shocked at the improvements.
 Here we noticed a bigger difference in the output being turned off.
 30 times faster (9 / 0.3)
 
-**With print (10,000):**
+**With print (10,000):**  
 ```
 6.038021037998988
 6.296833869000693
@@ -482,17 +472,17 @@ Here we noticed a bigger difference in the output being turned off.
 
 32 times faster (96 / 3).
 
-### if statements for output removed
-We do not see any difference. 
+### if statements for output removed  
+We do not see any difference.   
 
-**Without print (1,000):**
+**Without print (1,000):**  
 ```
 0.30075044499972137
 0.28801490999831003
 0.32457313800114207
 ```
 
-**Without print (10,000):**
+**Without print (10,000):**  
 ```
 3.030269856000814
 2.984034207998775
@@ -502,24 +492,30 @@ We do not see any difference.
 
 If you pass in jumbled nine letter words (that for sure have an anagram) then the algorithm is even faster, due to the fact that we find the anagram on the first attempt, rather then checking all the different variations of the word (length 7, 6, 5, 4, etc).
 Also since we don't need to generate random 9 letters this speeds it up.
-To pick a random word from a list is quicker.
+To pick a random word from a list is quicker.  
 
 When I run the tests they change depending on the computers state.
-At the time of this test, the seconds it took without print, for 1000 iterations was on average:
-**Random letter generation:**
-`0.3499353360020905`
-**Jumbled nine letters:**
-`0.32855197400203906`
+At the time of this test, the seconds it took without print, for 1000 iterations was on average:  
 
-For 10'000 iterations:
-**Random letter generation:**
-`3.4030903020029655`
-**Jumbled nine letters:**
-`3.156134046999796`
+**Random letter generation:**  
+`0.3499353360020905`  
+**Jumbled nine letters:**  
+`0.32855197400203906`  
+
+
+For 10'000 iterations:  
+
+**Random letter generation:**  
+`3.4030903020029655`  
+**Jumbled nine letters:**  
+`3.156134046999796`  
 
 We can see an increase of 8% here.
 
 ## Memory
+The images will not not show up in a gist.  
+If viewing this readme from a gist then go to the [Github repository][6] in order to view the images.  
+
 ###Version 1: (loading dictionary each time) 10'000 iterations
 ####CPU
 We can see a large decrease in CPU when the print statement is turned off.  
@@ -541,20 +537,21 @@ We can see a decrease of 0.02 GB (20 megabytes) when the print statement is off.
 I ran the new version watching the cpu and memory usage in the OSX Activity Monitor and via the `top` command line tool.  
 The memory of the process stayed at 22M for the entire time.  
 The CPU went to 80% and stayed there.
-Here is a screen shot in `top` of before and after running the 100'000 iterations:
+Here is a screen shot in `top` of before and after running the 100'000 iterations:  
+
 **stand by**  
 ![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/resources/v2-standby-top.png "v2-standby-top")
   
-**running**  
+**running**   
 ![alt text](https://github.com/RonanC/Countdown-Letters-Game-Solver/blob/master/resources/v2-running-top.png "v2-running-top")
 
-## Results
+## Results  
 The countdown games give it's players 30 seconds to find the best anagram.
 
-My script finds the answers in:
+My script finds the answers in:  
 `0.01677970700256992` seconds.
 
-With a preprocessing time of:
+With a preprocessing time of:  
 `0.03811841000424465` seconds.
 
 ## Unix timings
@@ -567,29 +564,37 @@ When running the query 10'000 times the unix dictionary is actually .008% quicke
 The preprocessing time for the Unix Word List, which includes reading in the words and generating a dictionary took `0.6351434009993682` seconds which is 2.78 times slower then the Oxford dictionary.
 
 ## Finding anagrams
-The unix dictionary has faster lookup times because we find the anagram earlier as there are more keys.
-**Ox (Without print) (10,000):**
+The unix dictionary has faster lookup times because we find the anagram earlier as there are more keys.  
+**Ox (Without print) (10,000):**  
+```
 2.5338323429969023
 2.5413470110070193
 2.5544159050041344
+```
 
-**Un (Without print) (10,000):**
+**Un (Without print) (10,000):**  
+```
 2.5180373690018314
 2.525958079000702
 2.531505778002611
+```
 
-## Preprocessing
+## Preprocessing  
 As expected the much larger dictionary is `2.78` times slower.
-We shouldn't really ever need to be using a dictionary larger then this.
-**Ox Prep:**
+We shouldn't really ever need to be using a dictionary larger then this.  
+**Ox Prep:**  
+```
 0.02311180099786725
 0.02326396799617214
 0.022261250000155997
+```
 
-**Un Prep:**
+**Un Prep:**  
+```
 0.6351434009993682
 0.6389991700052633
 0.647304867998173
+```
 
 ## Conclusion
 I have kept everything well abstracted and modular so that I may plug this into other modules and scale it out.
@@ -616,11 +621,11 @@ I initially wanted to create a web application in Flask, and a book parser to cr
 [5]: http://shop.oreilly.com/product/0636920031116.do
 [[5]]: Flask Web Development
 
-[6]: http://comjnl.oxfordjournals.org/content/6/3/293.full.pdf
-[[6]]: Lab Problems
+[6]: https://github.com/RonanC/Countdown-Letters-Game-Solver
+[[6]]: Github URL
 
-[7]: http://www.crummy.com/software/BeautifulSoup/
-[[7]]: Gambit Problem Sheet
+[7]: https://github.com/RonanC/Python-Problem-Sheet-1
+[[7]]: Python Problem Sheet
 
 [8]: http://www.cs.nott.ac.uk/~pszgmh/countdown.pdf
 [[8]]: The Countdown Problem - Graham Hutton

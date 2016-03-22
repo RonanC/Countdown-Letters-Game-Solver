@@ -23,6 +23,9 @@ import timeit
 
 
 def main_menu():
+    """
+    Menu system allowing the user to test all features.
+    """
     options = {
         0: quit, 1: create_word_list, 2: create_letters, 3: save_dict,
         4: run_solver, 5: time_solver, 6: time_preproc,
@@ -70,6 +73,10 @@ def main_menu():
 
 # create:
 def create_word_list():
+    """
+    Scrapes the Oxford diciotnary website and downloads all words.
+    Saves this to local storage.
+    """
     print('\nThis may take up to 2/3 mins to complete.')
     print('1:\tContinue')
     print('0:\tCancel')
@@ -87,11 +94,18 @@ def create_word_list():
 
 
 def create_letters():
+    """
+    Create random 9 letters following rules.
+    Not guaranteed to contain an anagram.
+    """
     print('Creating random letters...')
     print(letter_gen.letter_gen())
 
 
 def save_dict():
+    """
+    Save the dictionary to local storage.
+    """
     # loads word list, creates dictionary, saves it to pickle
     word_list = solver.load_word_list()
     word_dict = solver.create_word_dict(word_list)
@@ -100,6 +114,10 @@ def save_dict():
 
 # solver:
 def what_dict():
+    """
+    Choose the Oxford or Unix dictionaries.
+    The Unix one if huge.
+    """
     print('\nWhat dictionary?')
     print('1:\tOxford Learners (10938 words)')
     print('2:\tUnix (235886 words)')
@@ -123,6 +141,9 @@ def what_dict():
 
 
 def run_solver():
+    """
+    Run the solver once.
+    """
     dict_choice = what_dict()
 
     setup = """
@@ -149,26 +170,43 @@ def run(dict_num):
 
 
 def time_solver():
+    """
+    Time how long it takes to find an anagram a set amount of times.
+    """
     dict_choice = what_dict()
     timing.time_solver(dict_choice)
 
 
 def time_preproc():
+    """
+    Time preprocessing.
+    Includes reading in words list and generating dictionary.
+    """
     dict_choice = what_dict()
     timing.time_preproccesing(dict_choice)
 
 
 # nines:
 def gen_save_nines():
+    """
+    Generate a list of nine letters words from the dictionary,
+    and save it to a pikle and text file.
+    """
     print('Generating & saving nine letter words...')
     nines.gen_nines()
 
 
 def get_nine():
+    """
+    Get random jumbled nine letter word.
+    """
     print('Nine letter word: %s' % nines.word_picker())
 
 
 def run_solver_nine():
+    """
+    Test how long it takes to solve a jumbled nine letter word.
+    """
     print('Running solver with nine letter word (jumbled)....')
     # letters = nines.word_picker()
     # print("Letters:\t%s" % letters)
@@ -191,6 +229,9 @@ def run():
 
 # other algorithms:
 def time_heap_hash():
+    """
+    Time the heap hash module.
+    """
     setup = """
 def run():
     run_heap_hash()
@@ -201,6 +242,9 @@ def run():
 
 
 def run_heap_hash():
+    """
+    RUn the heap hash module.
+    """
     word = nines.word_picker()
     # print('Chosen word: %s\n' % word)
 
@@ -218,11 +262,17 @@ def run_heap_hash():
 
 # misc:
 def quit():
+    """
+    Exit program.
+    """
     print('Good bye.')
     sys.exit()
 
 
 def main():
+    """
+    Test function.
+    """
     main_menu()
 
 
