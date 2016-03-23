@@ -738,7 +738,7 @@ I initially wanted to create a web application in Flask, and a book parser to cr
 [11]: http://requests.readthedocs.org/en/master/
 [[11]]: Requests - The only Non-GMO HTTP library for Python
 
-[12]: countdown/word_list.txt
+[12]: https://raw.githubusercontent.com/RonanC/Countdown-Letters-Game-Solver/master/web_scraper/word_list.txt
 [[12]]: wordlist.txt file
 
 [13]: http://www.oxfordlearnersdictionaries.com/wordlist/
