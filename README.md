@@ -362,6 +362,7 @@ def gen_perms(n, A):
                 # break
 ```
 
+
 #### Heap Hash Version 2
 I cleaned up the swapping.
 ```py
@@ -408,12 +409,30 @@ This is using a dictionary with hashes as the key.
                 return (word_list[word_hash_num], total_count)
 ```
 
-#### Timings
-It takes on average `63.51399190000666` seconds to find the correct permutation.
 
-#### Conclusion
-It is an interesting approach.  
-I could have investigated generators and the yield function in order to keep the items out of memory, but I felt like the sorted word dictionary algorithm would prevail by a lot so I went ahead with that. I didn't feel a need to push this algorithm any farther.
+#### Heap Test (version 3)
+I created another version using more advanced techniques.
+I found some helpful information [here](http://stackoverflow.com/a/29044942/2052295). 
+```py
+def heap_perm(n, A):
+    """
+    Generates a permutation.
+    """
+    if n == 1:
+        yield A
+    else:
+        for i in range(n-1):
+            for hp in heap_perm(n-1, A):
+                yield hp
+            j = 0 if (n % 2) == 1 else i
+            A[j],  A[n-1] = A[n-1], A[j]
+        for hp in heap_perm(n-1, A):
+            yield hp
+```
+
+I have this generator along with a loop that iterates through each answer given by this generator.  
+I have another function that figures out how many permutations there are, so that the generator knows when to stop.  
+This is located in: `heap.heap_test.py`
 
 ### Sorted words in dictionary (final/main algorithm)
 This version of the solver took the biggest preprocessing time, as the whole words list needed be sorted, turned into a dictionary and pickled.
