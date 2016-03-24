@@ -222,20 +222,32 @@ We can also see it depends on the chosen words, some take longer to find.
 My script is in the files [countdown.py][14] in this repository and it works as follows.  
 It is the main entry point for the program, although you can run each module independently thanks to the structuring.  
 
-When you run this module you will be presented with a menu (~'s through the MD off so I took them out'):  
+When you run this module you will be presented with a menu:  
 ```
 ------Countdown-----
 --------------------
-1:  Create Dictionary
+Create:
+1:  Create Word List
 2:  Create Random Letters
-3:  Run Solvers
+3:  Create & Save dictionary
+Solver:
+4/ent:  Run Solver
+5:  Run Solver (timed)
+6:  Time Preprocessing
+Nines:
+7:  Gen & Save Nine Letter Words
+8:  Get nine letter word
+9:  Run solver with nine letter word
+Other:
+a:  Heap Hash Algorithm
 0:  Quit
 ```
 
 This lets you:  
-- create a dictionary which runs the web scraper.
-- test the random letters generator (which the run solvers option uses).
-- run the solver (main algorithm) which will generate random letters and find the best match.
+- Create a dictionary which runs the web scraper.
+- Test the random letters generator (which the run solvers option uses).
+- Run the solver (main algorithm) which will generate random letters and find the best match.
+- The rest are self explanatory.
 
 The solver function stops once it finds the best match, but it can keep going if we want, we just need to remove the break statement and append each results to a list.  
 
@@ -698,13 +710,17 @@ We shouldn't really ever need to be using a dictionary larger then this.
 ## Conclusion
 I have kept everything well abstracted and modular so that I may plug this into other modules and scale it out.
 
-I feel like the algorithm and helper functions, menu system are built very well and are easy to understand and extend.
+Each module works in it's own right, but also works from the main `countdown.py` module.
+
+The algorithm, helper functions and menu system are built in an easy to understand manner and are easily extensible.
 
 I have listed all efficiencies, timings, memory usage, code updates and insights into my thought process.
 
 I initially wanted to create a web application in Flask, and a book parser to create a dictionary. I left these out.
 
 ## References
+* some references are inline.  
+
 [1]: https://gist.github.com/ianmcloughlin/cc5340ee080bd135919a
 [[1]]: Project Brief
 
