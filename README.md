@@ -137,6 +137,9 @@ There are only 44 permutations because it only checks sorted permutations (which
 If I used a list and tweaked this algorithm it would be more efficient.  
 After much time I could not figure it out.
 
+Below you will find my other permutattion generator (based on heaps  algorithm); that function generates approximately 1.8 million permutations.  
+This number is so large because it creates all permutations for 9 letter words and shorter.
+
 ### Permutation generator with Yield
 I wanted to test out the use of `Yield` and `Generators`.  
 Generators are similar to functions, the difference is in the use of Yield rather then return.  
@@ -445,6 +448,10 @@ def heap_perm(n, A):
 I have this generator along with a loop that iterates through each answer given by this generator.  
 I have another function that figures out how many permutations there are, so that the generator knows when to stop.  
 This is located in: `heap.heap_test.py`
+
+This algorithm generates 362'880 permutations. 
+My Heap Hash function only checks for 9 letter word permutations (not smaller).  I could extend this use a `contains` function to check if any words in the dictionary are inside any of the word permutations, this would allow for smaller length words to be found.  
+I moved onto the Sorted Words dictionary algorithm instead of implenting the `contains`.
 
 ### Sorted words in dictionary (final/main algorithm)
 This version of the solver took the biggest preprocessing time, as the whole words list needed be sorted, turned into a dictionary and pickled.

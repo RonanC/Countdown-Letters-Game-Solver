@@ -48,11 +48,12 @@ def main():
     """
     Test function.
     """
-    lst = ['a', 'b', 'c', 'd']
+    lst = ['a', 'b', 'c', 'd' ,'e', 'f', 'g', 'h', 'i']
     gen = heap_perm(len(lst), lst)
     num = perm_num(lst)
     perms = heap_gen(gen, num)
-    print(perms)
+    # print(perms)
+    print(len(perms))
 
 if __name__ == '__main__':
     main()
