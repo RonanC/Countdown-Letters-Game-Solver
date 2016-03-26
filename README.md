@@ -137,8 +137,7 @@ There are only 44 permutations because it only checks sorted permutations (which
 If I used a list and tweaked this algorithm it would be more efficient.  
 After much time I could not figure it out.
 
-Below you will find my other permutattion generator (based on heaps  algorithm); that function generates approximately 1.8 million permutations.  
-This number is so large because it creates all permutations for 9 letter words and shorter.
+Below you will find my other permutation generator (based on heaps  algorithm); that function generates 362'880 permutations.
 
 ### Permutation generator with Yield
 I wanted to test out the use of `Yield` and `Generators`.  
